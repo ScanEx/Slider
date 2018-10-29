@@ -1,0 +1,186 @@
+<svelte:window on:mouseup="stop(event)" on:mousemove="move(event)"/>
+<div class="slider">
+    <div class="bar" ref:bar>
+        <div class="range" ref:range>
+            {#if !isNaN(parseFloat(low))}
+            <div class="left" ref:left on:mousedown="start(event, 'left')">
+                {#if tick}
+                    <div class="left-tick" ref:leftTick>{low.toFixed()}</div>
+                {/if}
+            </div>
+            {/if}
+            <div class="right" ref:right on:mousedown="start(event, 'right')">
+                {#if tick}
+                    <div class="right-tick" ref:rightTick>{high.toFixed()}</div>
+                {/if}
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>    
+    .slider {  
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+    }      
+    .slider .bar {
+        top: 12px;
+    }    
+    .slider .bar .range {
+        height: 6px;
+    }
+    .slider .bar .range .left,
+    .slider .bar .range .right {                
+        top: -4px;        
+    }        
+    .slider .bar,
+    .slider .bar .range,
+    .slider .bar .range .left,
+    .slider .bar .range .right {
+        position: relative;
+    }
+    .slider .bar .range .left,
+    .slider .bar .range .right {
+        width: 12px;
+        height: 12px;
+        cursor: pointer;
+    }    
+    .slider .bar .range .left {
+        float: left;   
+    }
+    .slider .bar .range .right {
+        float: right;    
+    }
+    .slider .bar .range .left .left-tick,
+    .slider .bar .range .right .right-tick {
+        position: relative;
+        left: -2px;
+        top: -18px;
+        display: none;
+    }  
+</style>
+
+<script>
+    const TIMEOUT =  70;
+    export default {
+        data () {
+            return {
+                min: 0,
+                max: 0,
+                low: NaN,
+                high: 0,
+                step: 0,
+                tick: false, 
+            };
+        },        
+        oncreate() {            
+            const {min, max, low, high, orientation} = this.get();
+            const {width, height} = this.refs.right.getBoundingClientRect();            
+            this._tick = width;
+            this._ratio = this._getRatio(min, max, this._tick);
+            this._updateDom(min, max, low, high, this._tick, this._ratio);
+        },
+        onupdate({changed, current, previous}) {            
+            if (changed.low) {
+                const lo = parseFloat(current.low);
+                if (!isNaN(lo)) {
+                    const {min, max, high} = this.get();
+                    this._updateDom (min, max, lo, high, this._tick, this._ratio);                    
+                }
+            }
+            if (changed.high) {
+                const hi = parseFloat(current.high);
+                if (!isNaN(hi)) {
+                    const {min, max, low} = this.get();
+                    this._updateDom (min, max, low, hi, this._tick, this._ratio);                    
+                }
+            }
+        },
+        methods: {
+            start (e, target) {                
+                e.stopPropagation();
+                this._moving = true;                
+                const {low, high} = this.get();
+                this._startX = e.x;                
+                this._target = target;
+                switch (target) {
+                    case 'left':
+                        this._start = low;
+                        this.refs.leftTick.style.display = 'block';
+                        break;
+                    case 'right':
+                        this._start = high;
+                        this.refs.rightTick.style.display = 'block';
+                        break;
+                    default:
+                        break;
+                }                
+            },
+            move(e) {                
+                if (this._moving) {
+                    setTimeout(() => {
+                        e.stopPropagation();                                                            
+                        const {min, max, low, high, step, orientation} = this.get();
+                        const a = parseFloat(min);
+                        const z = parseFloat(max);
+                        const s = parseFloat (step);                                        
+                        let d = (e.x - this._startX) * this._ratio;                    
+                        if (s > 0) {
+                            d = Math.floor (d / s) * s;
+                        }
+                        const x = this._start + d;
+                        switch (this._target) {
+                            case 'left':
+                                const hi = parseFloat(high);
+                                if (!isNaN(a) && !isNaN(hi) && a <= x && x <= hi) {
+                                    this.set({low: x});
+                                }
+                                break;
+                            case 'right':
+                                const lo = parseFloat(low);                            
+                                if (!isNaN(z) && (!isNaN(lo) && lo <= x && x <= z || isNaN(lo) && !isNaN(a) && a <= x && x <= z)) {
+                                    this.set({high: x});
+                                }                            
+                                break;
+                            default:
+                                break;
+                        }
+                    }, TIMEOUT);
+                }
+            },
+            stop (e) {
+                this._moving = false;
+                this.refs.leftTick.style.display = 'none';
+                this.refs.rightTick.style.display = 'none';              
+                this._target = null;
+            },
+            _getRatio (min, max, size) {
+                const a = parseFloat(min);
+                const z = parseFloat(max);        
+                if (!isNaN(a) && !isNaN(z)) {                            
+                    const {width, height} = this.refs.bar.getBoundingClientRect();
+                    return (z - a) / (width - 2 * size);
+                }
+                else {
+                    return NaN;
+                }
+            },
+            _updateDom (min, max, low, high, tick, ratio) {
+                const a = parseFloat(min);
+                const z = parseFloat(max);
+                const lo = parseFloat(low);
+                const hi = parseFloat(high);
+                if (!isNaN(a) && !isNaN(z) && !isNaN(hi) && a <= hi && hi <= z) {                    
+                    this.refs.range.style.width = `${Math.round((!isNaN(lo) && a <= lo && lo <= hi ? (hi - lo) : hi) / ratio + 2 * tick)}px`;
+                    if (!isNaN(lo) && a <= lo && lo <= hi) {
+                        this.refs.range.style.left = `${Math.round(lo / ratio)}px`;
+                    }
+                }
+            }
+        },
+    };
+</script>

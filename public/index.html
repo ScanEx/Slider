@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />    
+        <link rel="stylesheet" href="main.css" />
+        <link rel="stylesheet" href="style.css" />
+        <script src="main.js"></script>
+    </head>
+    <body>
+        <div id="slider"></div>
+        <script>
+            new Slider({
+                target: document.getElementById('slider'),
+                data: {
+                    min: 0,
+                    max: 100,
+                    low: 10,
+                    high: 60,
+                    step: 0,
+                    orientation: 'horizontal',
+                    tick: true,
+                }
+            });
+        </script>
+    </body>
+</html>

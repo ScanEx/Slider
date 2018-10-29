@@ -1,0 +1,15 @@
+.slider-vertical {
+    height: 300px;
+}
+.slider .bar {
+    background-color: gainsboro;
+}
+.slider .bar .range {
+    background-color: lightskyblue;
+}
+.slider .bar .range .left,
+.slider .bar .range .right {
+    background-color: white;
+    border-radius: 3px;
+    border: 1px solid lightslategray;
+}
