@@ -1,0 +1,2 @@
+# Slider
+Customizable slider widget
