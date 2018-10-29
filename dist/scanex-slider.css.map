@@ -1,6 +1,6 @@
 {
   "version": 3,
-  "file": "scanex-slider-widget.css",
+  "file": "scanex-slider.css",
   "sources": [
     "..\\src\\HSlider.html",
     "..\\src\\VSlider.html"
