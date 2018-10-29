@@ -47,7 +47,7 @@ export default [
                 nestedTransitions: true,            
                 dev: true,
                 css: css => {
-                    css.write('dist/scanex-slider-widget.css');
+                    css.write('dist/scanex-slider.css');
                 }
             }),
             resolve({ jsnext: true, main: true, module: false, browser: false }),
