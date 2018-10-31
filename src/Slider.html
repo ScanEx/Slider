@@ -1,4 +1,6 @@
-<svelte:component this="{orientation === 'horizontal' ? HSlider : VSlider }" bind:min bind:max bind:low bind:high bind:step bind:tick />
+<svelte:component this="{orientation === 'horizontal' ? HSlider : VSlider }" bind:min bind:max bind:low bind:high bind:step bind:tooltip>
+    <slot></slot>
+</svelte:component>
 
 <script>
     import HSlider from './HSlider.html';

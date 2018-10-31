@@ -43,6 +43,22 @@ var Slider = (function () {
   	node.parentNode.removeChild(node);
   }
 
+  function reinsertChildren(parent, target) {
+  	while (parent.firstChild) {
+  		target.appendChild(parent.firstChild);
+  	}
+  }
+
+  function reinsertAfter(before, target) {
+  	while (before.nextSibling) {
+  		target.appendChild(before.nextSibling);
+  	}
+  }
+
+  function createFragment() {
+  	return document.createDocumentFragment();
+  }
+
   function createElement(name) {
   	return document.createElement(name);
   }
@@ -227,7 +243,7 @@ var Slider = (function () {
   		low: NaN,
   		high: 0,
   		step: 0,
-  		tick: false
+  		tooltip: false
   	};
   }
   var methods = {
@@ -376,7 +392,15 @@ var Slider = (function () {
   var file = "src\\HSlider.html";
 
   function create_main_fragment(component, ctx) {
-  	var div3, div2, div1, text, div0, current;
+  	var div3,
+  	    div2,
+  	    div1,
+  	    text0,
+  	    div0,
+  	    text1,
+  	    slot_content_default = component._slotted.default,
+  	    slot_content_default_before,
+  	    current;
 
   	function onwindowmouseup(event) {
   		component.stop(event);	}
@@ -388,7 +412,7 @@ var Slider = (function () {
 
   	var if_block0 = !ctx.isNaN(ctx.parseFloat(ctx.low)) && create_if_block_1(component, ctx);
 
-  	var if_block1 = ctx.tick && create_if_block(component, ctx);
+  	var if_block1 = ctx.tooltip && create_if_block(component, ctx);
 
   	function mousedown_handler(event) {
   		component.start(event, 'right');
@@ -400,12 +424,13 @@ var Slider = (function () {
   			div2 = createElement("div");
   			div1 = createElement("div");
   			if (if_block0) if_block0.c();
-  			text = createText("\r\n            ");
+  			text0 = createText("\r\n            ");
   			div0 = createElement("div");
   			if (if_block1) if_block1.c();
+  			text1 = createText("\r\n        ");
   			addListener(div0, "mousedown", mousedown_handler);
   			div0.className = "right svelte-1s8z56a";
-  			addLoc(div0, file, 11, 12, 463);
+  			addLoc(div0, file, 11, 12, 466);
   			div1.className = "range svelte-1s8z56a";
   			addLoc(div1, file, 3, 8, 131);
   			div2.className = "bar svelte-1s8z56a";
@@ -419,11 +444,18 @@ var Slider = (function () {
   			append(div3, div2);
   			append(div2, div1);
   			if (if_block0) if_block0.m(div1, null);
-  			append(div1, text);
+  			append(div1, text0);
   			append(div1, div0);
   			if (if_block1) if_block1.m(div0, null);
   			component.refs.right = div0;
   			component.refs.range = div1;
+  			append(div2, text1);
+
+  			if (slot_content_default) {
+  				append(div2, slot_content_default_before || (slot_content_default_before = createComment()));
+  				append(div2, slot_content_default);
+  			}
+
   			component.refs.bar = div2;
   			current = true;
   		},
@@ -435,14 +467,14 @@ var Slider = (function () {
   				} else {
   					if_block0 = create_if_block_1(component, ctx);
   					if_block0.c();
-  					if_block0.m(div1, text);
+  					if_block0.m(div1, text0);
   				}
   			} else if (if_block0) {
   				if_block0.d(1);
   				if_block0 = null;
   			}
 
-  			if (ctx.tick) {
+  			if (ctx.tooltip) {
   				if (if_block1) {
   					if_block1.p(changed, ctx);
   				} else {
@@ -478,6 +510,11 @@ var Slider = (function () {
   			removeListener(div0, "mousedown", mousedown_handler);
   			if (component.refs.right === div0) component.refs.right = null;
   			if (component.refs.range === div1) component.refs.range = null;
+
+  			if (slot_content_default) {
+  				reinsertAfter(slot_content_default_before, slot_content_default);
+  			}
+
   			if (component.refs.bar === div2) component.refs.bar = null;
   		}
   	};
@@ -487,7 +524,7 @@ var Slider = (function () {
   function create_if_block_1(component, ctx) {
   	var div;
 
-  	var if_block = ctx.tick && create_if_block_2(component, ctx);
+  	var if_block = ctx.tooltip && create_if_block_2(component, ctx);
 
   	function mousedown_handler(event) {
   		component.start(event, 'left');
@@ -509,7 +546,7 @@ var Slider = (function () {
   		},
 
   		p: function update(changed, ctx) {
-  			if (ctx.tick) {
+  			if (ctx.tooltip) {
   				if (if_block) {
   					if_block.p(changed, ctx);
   				} else {
@@ -535,7 +572,7 @@ var Slider = (function () {
   	};
   }
 
-  // (7:16) {#if tick}
+  // (7:16) {#if tooltip}
   function create_if_block_2(component, ctx) {
   	var div,
   	    text_value = ctx.low.toFixed(),
@@ -546,7 +583,7 @@ var Slider = (function () {
   			div = createElement("div");
   			text = createText(text_value);
   			div.className = "left-tick svelte-1s8z56a";
-  			addLoc(div, file, 7, 20, 330);
+  			addLoc(div, file, 7, 20, 333);
   		},
 
   		m: function mount(target, anchor) {
@@ -571,7 +608,7 @@ var Slider = (function () {
   	};
   }
 
-  // (13:16) {#if tick}
+  // (13:16) {#if tooltip}
   function create_if_block(component, ctx) {
   	var div,
   	    text_value = ctx.high.toFixed(),
@@ -582,7 +619,7 @@ var Slider = (function () {
   			div = createElement("div");
   			text = createText(text_value);
   			div.className = "right-tick svelte-1s8z56a";
-  			addLoc(div, file, 13, 20, 579);
+  			addLoc(div, file, 13, 20, 585);
   		},
 
   		m: function mount(target, anchor) {
@@ -620,10 +657,12 @@ var Slider = (function () {
   	this._state = assign(assign({ isNaN: isNaN, parseFloat: parseFloat }, data()), options.data);
 
   	if (!('low' in this._state)) console.warn("<HSlider> was created without expected data property 'low'");
-  	if (!('tick' in this._state)) console.warn("<HSlider> was created without expected data property 'tick'");
+  	if (!('tooltip' in this._state)) console.warn("<HSlider> was created without expected data property 'tooltip'");
   	if (!('high' in this._state)) console.warn("<HSlider> was created without expected data property 'high'");
   	this._intro = !!options.intro;
   	this._handlers.update = [onupdate];
+
+  	this._slotted = options.slots || {};
 
   	this._fragment = create_main_fragment(this, this._state);
 
@@ -658,7 +697,7 @@ var Slider = (function () {
   		low: NaN,
   		high: 0,
   		step: 0,
-  		tick: false
+  		tooltip: false
   	};
   }
   var methods$1 = {
@@ -808,7 +847,15 @@ var Slider = (function () {
   var file$1 = "src\\VSlider.html";
 
   function create_main_fragment$1(component, ctx) {
-  	var div3, div2, div1, text, div0, current;
+  	var div3,
+  	    div2,
+  	    div1,
+  	    text0,
+  	    div0,
+  	    text1,
+  	    slot_content_default = component._slotted.default,
+  	    slot_content_default_before,
+  	    current;
 
   	function onwindowmouseup(event) {
   		component.stop(event);	}
@@ -820,7 +867,7 @@ var Slider = (function () {
 
   	var if_block0 = !ctx.isNaN(ctx.parseFloat(ctx.low)) && create_if_block_1$1(component, ctx);
 
-  	var if_block1 = ctx.tick && create_if_block$1(component, ctx);
+  	var if_block1 = ctx.tooltip && create_if_block$1(component, ctx);
 
   	function mousedown_handler(event) {
   		component.start(event, 'right');
@@ -832,12 +879,13 @@ var Slider = (function () {
   			div2 = createElement("div");
   			div1 = createElement("div");
   			if (if_block0) if_block0.c();
-  			text = createText("\r\n            ");
+  			text0 = createText("\r\n            ");
   			div0 = createElement("div");
   			if (if_block1) if_block1.c();
+  			text1 = createText("\r\n        ");
   			addListener(div0, "mousedown", mousedown_handler);
   			div0.className = "right svelte-cczca1";
-  			addLoc(div0, file$1, 11, 12, 463);
+  			addLoc(div0, file$1, 11, 12, 466);
   			div1.className = "range svelte-cczca1";
   			addLoc(div1, file$1, 3, 8, 131);
   			div2.className = "bar svelte-cczca1";
@@ -851,11 +899,18 @@ var Slider = (function () {
   			append(div3, div2);
   			append(div2, div1);
   			if (if_block0) if_block0.m(div1, null);
-  			append(div1, text);
+  			append(div1, text0);
   			append(div1, div0);
   			if (if_block1) if_block1.m(div0, null);
   			component.refs.right = div0;
   			component.refs.range = div1;
+  			append(div2, text1);
+
+  			if (slot_content_default) {
+  				append(div2, slot_content_default_before || (slot_content_default_before = createComment()));
+  				append(div2, slot_content_default);
+  			}
+
   			component.refs.bar = div2;
   			current = true;
   		},
@@ -867,14 +922,14 @@ var Slider = (function () {
   				} else {
   					if_block0 = create_if_block_1$1(component, ctx);
   					if_block0.c();
-  					if_block0.m(div1, text);
+  					if_block0.m(div1, text0);
   				}
   			} else if (if_block0) {
   				if_block0.d(1);
   				if_block0 = null;
   			}
 
-  			if (ctx.tick) {
+  			if (ctx.tooltip) {
   				if (if_block1) {
   					if_block1.p(changed, ctx);
   				} else {
@@ -910,6 +965,11 @@ var Slider = (function () {
   			removeListener(div0, "mousedown", mousedown_handler);
   			if (component.refs.right === div0) component.refs.right = null;
   			if (component.refs.range === div1) component.refs.range = null;
+
+  			if (slot_content_default) {
+  				reinsertAfter(slot_content_default_before, slot_content_default);
+  			}
+
   			if (component.refs.bar === div2) component.refs.bar = null;
   		}
   	};
@@ -919,7 +979,7 @@ var Slider = (function () {
   function create_if_block_1$1(component, ctx) {
   	var div;
 
-  	var if_block = ctx.tick && create_if_block_2$1(component, ctx);
+  	var if_block = ctx.tooltip && create_if_block_2$1(component, ctx);
 
   	function mousedown_handler(event) {
   		component.start(event, 'left');
@@ -941,7 +1001,7 @@ var Slider = (function () {
   		},
 
   		p: function update(changed, ctx) {
-  			if (ctx.tick) {
+  			if (ctx.tooltip) {
   				if (if_block) {
   					if_block.p(changed, ctx);
   				} else {
@@ -967,7 +1027,7 @@ var Slider = (function () {
   	};
   }
 
-  // (7:16) {#if tick}
+  // (7:16) {#if tooltip}
   function create_if_block_2$1(component, ctx) {
   	var div,
   	    text_value = ctx.low.toFixed(),
@@ -978,7 +1038,7 @@ var Slider = (function () {
   			div = createElement("div");
   			text = createText(text_value);
   			div.className = "left-tick svelte-cczca1";
-  			addLoc(div, file$1, 7, 20, 330);
+  			addLoc(div, file$1, 7, 20, 333);
   		},
 
   		m: function mount(target, anchor) {
@@ -1003,7 +1063,7 @@ var Slider = (function () {
   	};
   }
 
-  // (13:16) {#if tick}
+  // (13:16) {#if tooltip}
   function create_if_block$1(component, ctx) {
   	var div,
   	    text_value = ctx.high.toFixed(),
@@ -1014,7 +1074,7 @@ var Slider = (function () {
   			div = createElement("div");
   			text = createText(text_value);
   			div.className = "right-tick svelte-cczca1";
-  			addLoc(div, file$1, 13, 20, 579);
+  			addLoc(div, file$1, 13, 20, 585);
   		},
 
   		m: function mount(target, anchor) {
@@ -1052,10 +1112,12 @@ var Slider = (function () {
   	this._state = assign(assign({ isNaN: isNaN, parseFloat: parseFloat }, data$1()), options.data);
 
   	if (!('low' in this._state)) console.warn("<VSlider> was created without expected data property 'low'");
-  	if (!('tick' in this._state)) console.warn("<VSlider> was created without expected data property 'tick'");
+  	if (!('tooltip' in this._state)) console.warn("<VSlider> was created without expected data property 'tooltip'");
   	if (!('high' in this._state)) console.warn("<VSlider> was created without expected data property 'high'");
   	this._intro = !!options.intro;
   	this._handlers.update = [onupdate$1];
+
+  	this._slotted = options.slots || {};
 
   	this._fragment = create_main_fragment$1(this, this._state);
 
@@ -1086,7 +1148,8 @@ var Slider = (function () {
   	return { HSlider: HSlider, VSlider: VSlider };
   }
   function create_main_fragment$2(component, ctx) {
-  	var switch_instance_updating = {},
+  	var slot_content_default = component._slotted.default,
+  	    switch_instance_updating = {},
   	    switch_instance_anchor,
   	    current;
 
@@ -1114,13 +1177,14 @@ var Slider = (function () {
   			switch_instance_initial_data.step = ctx.step;
   			switch_instance_updating.step = true;
   		}
-  		if (ctx.tick !== void 0) {
-  			switch_instance_initial_data.tick = ctx.tick;
-  			switch_instance_updating.tick = true;
+  		if (ctx.tooltip !== void 0) {
+  			switch_instance_initial_data.tooltip = ctx.tooltip;
+  			switch_instance_updating.tooltip = true;
   		}
   		return {
   			root: component.root,
   			store: component.store,
+  			slots: { default: createFragment() },
   			data: switch_instance_initial_data,
   			_bind: function _bind(changed, childState) {
   				var newState = {};
@@ -1144,8 +1208,8 @@ var Slider = (function () {
   					newState.step = childState.step;
   				}
 
-  				if (!switch_instance_updating.tick && changed.tick) {
-  					newState.tick = childState.tick;
+  				if (!switch_instance_updating.tooltip && changed.tooltip) {
+  					newState.tooltip = childState.tooltip;
   				}
   				component._set(newState);
   				switch_instance_updating = {};
@@ -1157,7 +1221,7 @@ var Slider = (function () {
   		var switch_instance = new switch_value(switch_props(ctx));
 
   		component.root._beforecreate.push(function () {
-  			switch_instance._bind({ min: 1, max: 1, low: 1, high: 1, step: 1, tick: 1 }, switch_instance.get());
+  			switch_instance._bind({ min: 1, max: 1, low: 1, high: 1, step: 1, tooltip: 1 }, switch_instance.get());
   		});
   	}
 
@@ -1168,6 +1232,10 @@ var Slider = (function () {
   		},
 
   		m: function mount(target, anchor) {
+  			if (slot_content_default) {
+  				append(switch_instance._slotted.default, slot_content_default);
+  			}
+
   			if (switch_instance) {
   				switch_instance._mount(target, anchor);
   			}
@@ -1199,9 +1267,9 @@ var Slider = (function () {
   				switch_instance_changes.step = ctx.step;
   				switch_instance_updating.step = ctx.step !== void 0;
   			}
-  			if (!switch_instance_updating.tick && changed.tick) {
-  				switch_instance_changes.tick = ctx.tick;
-  				switch_instance_updating.tick = ctx.tick !== void 0;
+  			if (!switch_instance_updating.tooltip && changed.tooltip) {
+  				switch_instance_changes.tooltip = ctx.tooltip;
+  				switch_instance_updating.tooltip = ctx.tooltip !== void 0;
   			}
 
   			if (switch_value !== (switch_value = ctx.orientation === 'horizontal' ? ctx.HSlider : ctx.VSlider)) {
@@ -1222,10 +1290,12 @@ var Slider = (function () {
   						if (ctx.low === void 0) changed.low = 1;
   						if (ctx.high === void 0) changed.high = 1;
   						if (ctx.step === void 0) changed.step = 1;
-  						if (ctx.tick === void 0) changed.tick = 1;
+  						if (ctx.tooltip === void 0) changed.tooltip = 1;
   						switch_instance._bind(changed, switch_instance.get());
   					});
   					switch_instance._fragment.c();
+
+  					slot.m(switch_instance._slotted.default, null);
   					switch_instance._mount(switch_instance_anchor.parentNode, switch_instance_anchor);
   				} else {
   					switch_instance = null;
@@ -1250,6 +1320,10 @@ var Slider = (function () {
   		},
 
   		d: function destroy$$1(detach) {
+  			if (slot_content_default) {
+  				reinsertChildren(switch_instance._slotted.default, slot_content_default);
+  			}
+
   			if (detach) {
   				detachNode(switch_instance_anchor);
   			}
@@ -1275,8 +1349,10 @@ var Slider = (function () {
   	if (!('low' in this._state)) console.warn("<Slider> was created without expected data property 'low'");
   	if (!('high' in this._state)) console.warn("<Slider> was created without expected data property 'high'");
   	if (!('step' in this._state)) console.warn("<Slider> was created without expected data property 'step'");
-  	if (!('tick' in this._state)) console.warn("<Slider> was created without expected data property 'tick'");
+  	if (!('tooltip' in this._state)) console.warn("<Slider> was created without expected data property 'tooltip'");
   	this._intro = !!options.intro;
+
+  	this._slotted = options.slots || {};
 
   	this._fragment = create_main_fragment$2(this, this._state);
 
