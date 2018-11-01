@@ -1,15 +1,48 @@
-.slider-vertical {
-    height: 300px;
+#slider {
+    position: relative;
+    left: 10px;
+    top: 100px;
 }
-.slider .bar {
+.hslider {
+    width: 600px;
+}
+.hslider .bar {
+    height: 14px;
     background-color: gainsboro;
 }
-.slider .bar .range {
+.hslider .bar .range {
+    height: 6px;
+    top: 4px;
     background-color: lightskyblue;
 }
-.slider .bar .range .left,
-.slider .bar .range .right {
+.vslider .bar .range {
+    background-color: lightskyblue;
+}
+.hslider .bar .range .left,
+.hslider .bar .range .right {
     background-color: white;
     border-radius: 3px;
     border: 1px solid lightslategray;
+    top: -4px;    
+}
+.vslider,
+.vslider .bar {
+    height: 300px;
+    width: 14px;
+}
+.vslider .bar {
+    left: 4px;        
+    width: 14px;
+    background-color: gainsboro;
+}
+.vslider .bar .range {
+    width: 6px;
+    left: 4px;
+}
+.vslider .bar .range .left,
+.vslider .bar .range .right {
+    background-color: white;
+    border-radius: 3px;
+    border: 1px solid lightslategray;
+    left: -4px;
 }

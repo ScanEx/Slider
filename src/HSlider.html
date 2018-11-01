@@ -1,5 +1,5 @@
 <svelte:window on:mouseup="stop(event)" on:mousemove="move(event)"/>
-<div class="slider">
+<div class:hslider="true">
     <div class="bar" ref:bar>
         <div class="range" ref:range>
             {#if isRange}
@@ -14,55 +14,45 @@
                     <div class="right-tick" ref:rightTick>{parseFloat(high).toFixed()}</div>
                 {/if}
             </div>
-        </div>        
+        </div>
     </div>
     <slot></slot>
 </div>
 
 <style>    
-    .slider {  
+    .hslider {  
         -webkit-touch-callout: none;
         -webkit-user-select: none;
         -khtml-user-select: none;
         -moz-user-select: none;
         -ms-user-select: none;
         user-select: none;
-    }      
-    .slider .bar {
-        top: 12px;
-    }    
-    .slider .bar .range {
-        height: 6px;
     }
-    .slider .bar .range .left,
-    .slider .bar .range .right {                
-        top: -4px;        
-    }        
-    .slider .bar,
-    .slider .bar .range,
-    .slider .bar .range .left,
-    .slider .bar .range .right {
+    .hslider .bar,
+    .hslider .bar .range,
+    .hslider .bar .range .left,
+    .hslider .bar .range .right {
         position: relative;
     }
-    .slider .bar .range .left,
-    .slider .bar .range .right {
+    .hslider .bar .range .left,
+    .hslider .bar .range .right {
         width: 12px;
         height: 12px;
         cursor: pointer;
     }    
-    .slider .bar .range .left {
+    .hslider .bar .range .left {
         float: left;   
     }
-    .slider .bar .range .right {
+    .hslider .bar .range .right {
         float: right;    
     }
-    .slider .bar .range .left .left-tick,
-    .slider .bar .range .right .right-tick {
+    .hslider .bar .range .left .left-tick,
+    .hslider .bar .range .right .right-tick {
         position: relative;
         left: -2px;
         top: -18px;
         display: none;
-    }  
+    }
 </style>
 
 <script>
@@ -75,7 +65,7 @@
                 low: NaN,
                 high: 0,
                 step: 0,
-                tooltip: false,                 
+                tooltip: false,
             };
         },  
         computed: {

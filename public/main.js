@@ -83,6 +83,10 @@ var Slider = (function () {
   	text.data = '' + data;
   }
 
+  function toggleClass(element, name, toggle) {
+  	element.classList.toggle(name, !!toggle);
+  }
+
   function blankObject() {
   	return Object.create(null);
   }
@@ -463,13 +467,14 @@ var Slider = (function () {
   			if (if_block1) if_block1.c();
   			text1 = createText("\r\n    ");
   			addListener(div0, "mousedown", mousedown_handler);
-  			div0.className = "right svelte-1s8z56a";
-  			addLoc(div0, file, 11, 12, 465);
-  			div1.className = "range svelte-1s8z56a";
-  			addLoc(div1, file, 3, 8, 131);
-  			div2.className = "bar svelte-1s8z56a";
-  			addLoc(div2, file, 2, 4, 96);
-  			div3.className = "slider svelte-1s8z56a";
+  			div0.className = "right svelte-fkriys";
+  			addLoc(div0, file, 11, 12, 471);
+  			div1.className = "range svelte-fkriys";
+  			addLoc(div1, file, 3, 8, 137);
+  			div2.className = "bar svelte-fkriys";
+  			addLoc(div2, file, 2, 4, 102);
+  			div3.className = "svelte-fkriys";
+  			toggleClass(div3, "hslider", true);
   			addLoc(div3, file, 1, 0, 70);
   		},
 
@@ -568,8 +573,8 @@ var Slider = (function () {
   			div = createElement("div");
   			if (if_block) if_block.c();
   			addListener(div, "mousedown", mousedown_handler);
-  			div.className = "left svelte-1s8z56a";
-  			addLoc(div, file, 5, 12, 201);
+  			div.className = "left svelte-fkriys";
+  			addLoc(div, file, 5, 12, 207);
   		},
 
   		m: function mount(target, anchor) {
@@ -615,8 +620,8 @@ var Slider = (function () {
   		c: function create() {
   			div = createElement("div");
   			text = createText(text_value);
-  			div.className = "left-tick svelte-1s8z56a";
-  			addLoc(div, file, 7, 20, 320);
+  			div.className = "left-tick svelte-fkriys";
+  			addLoc(div, file, 7, 20, 326);
   		},
 
   		m: function mount(target, anchor) {
@@ -651,8 +656,8 @@ var Slider = (function () {
   		c: function create() {
   			div = createElement("div");
   			text = createText(text_value);
-  			div.className = "right-tick svelte-1s8z56a";
-  			addLoc(div, file, 13, 20, 587);
+  			div.className = "right-tick svelte-fkriys";
+  			addLoc(div, file, 13, 20, 593);
   		},
 
   		m: function mount(target, anchor) {
@@ -890,11 +895,8 @@ var Slider = (function () {
   	    orientation = _get4.orientation,
   	    isRange = _get4.isRange;
 
-  	var _refs$right$getBoundi = this.refs.right.getBoundingClientRect(),
-  	    width = _refs$right$getBoundi.width,
-  	    height = _refs$right$getBoundi.height;
-
-  	this._size = isRange ? 2 * width : width;
+  	var height = this.refs.right.getBoundingClientRect().height;
+  	this._size = isRange ? 2 * height : height;
   	this._ratio = this._getRatio(min, max, this._size);
   	this._updateDom(min, max, low, high, this._size, this._ratio);
   }
@@ -966,13 +968,14 @@ var Slider = (function () {
   			if (if_block1) if_block1.c();
   			text1 = createText("\r\n    ");
   			addListener(div0, "mousedown", mousedown_handler);
-  			div0.className = "right svelte-cczca1";
-  			addLoc(div0, file$1, 11, 12, 465);
-  			div1.className = "range svelte-cczca1";
-  			addLoc(div1, file$1, 3, 8, 131);
-  			div2.className = "bar svelte-cczca1";
-  			addLoc(div2, file$1, 2, 4, 96);
-  			div3.className = "slider svelte-cczca1";
+  			div0.className = "right svelte-3l5wpe";
+  			addLoc(div0, file$1, 11, 12, 471);
+  			div1.className = "range svelte-3l5wpe";
+  			addLoc(div1, file$1, 3, 8, 137);
+  			div2.className = "bar svelte-3l5wpe";
+  			addLoc(div2, file$1, 2, 4, 102);
+  			div3.className = "svelte-3l5wpe";
+  			toggleClass(div3, "vslider", true);
   			addLoc(div3, file$1, 1, 0, 70);
   		},
 
@@ -1071,8 +1074,8 @@ var Slider = (function () {
   			div = createElement("div");
   			if (if_block) if_block.c();
   			addListener(div, "mousedown", mousedown_handler);
-  			div.className = "left svelte-cczca1";
-  			addLoc(div, file$1, 5, 12, 201);
+  			div.className = "left svelte-3l5wpe";
+  			addLoc(div, file$1, 5, 12, 207);
   		},
 
   		m: function mount(target, anchor) {
@@ -1118,8 +1121,8 @@ var Slider = (function () {
   		c: function create() {
   			div = createElement("div");
   			text = createText(text_value);
-  			div.className = "left-tick svelte-cczca1";
-  			addLoc(div, file$1, 7, 20, 320);
+  			div.className = "left-tick svelte-3l5wpe";
+  			addLoc(div, file$1, 7, 20, 326);
   		},
 
   		m: function mount(target, anchor) {
@@ -1154,8 +1157,8 @@ var Slider = (function () {
   		c: function create() {
   			div = createElement("div");
   			text = createText(text_value);
-  			div.className = "right-tick svelte-cczca1";
-  			addLoc(div, file$1, 13, 20, 587);
+  			div.className = "right-tick svelte-3l5wpe";
+  			addLoc(div, file$1, 13, 20, 593);
   		},
 
   		m: function mount(target, anchor) {

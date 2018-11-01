@@ -1,5 +1,5 @@
 <svelte:window on:mouseup="stop(event)" on:mousemove="move(event)"/>
-<div class="slider">
+<div class:vslider="true">
     <div class="bar" ref:bar>
         <div class="range" ref:range>
             {#if isRange}
@@ -14,44 +14,35 @@
                     <div class="right-tick" ref:rightTick>{parseFloat(high).toFixed()}</div>
                 {/if}
             </div>
-        </div>        
+        </div>
     </div>
     <slot></slot>
 </div>
 
-<style>    
-    .slider {  
+<style>
+    .vslider {  
         -webkit-touch-callout: none;
         -webkit-user-select: none;
         -khtml-user-select: none;
         -moz-user-select: none;
         -ms-user-select: none;
         user-select: none;
-    }      
-    .slider .bar {
-        left: 4px;
-        height: 300px;
-    }
-    .slider .bar,
-    .slider .bar .range {
-        width: 6px;
-    }
-    .slider .bar,
-    .slider .bar .range,
-    .slider .bar .range .left,
-    .slider .bar .range .right {
+    }    
+    .vslider .bar,
+    .vslider .bar .range,
+    .vslider .bar .range .left,
+    .vslider .bar .range .right {
         position: relative;
     }
-    .slider .bar .range .left,
-    .slider .bar .range .right {
+    .vslider .bar .range .left,
+    .vslider .bar .range .right {
         width: 12px;
         height: 12px;
         cursor: pointer;
-        display: block;
-        left: -4px;
+        display: block;        
     }    
-    .slider .bar .range .left .left-tick,
-    .slider .bar .range .right .right-tick {
+    .vslider .bar .range .left .left-tick,
+    .vslider .bar .range .right .right-tick {
         position: relative;
         left: 17px;
         top: -3px;
@@ -60,7 +51,7 @@
 </style>
 
 <script>
-    const TIMEOUT =  70;
+    const TIMEOUT = 70;
     export default {
         data () {
             return {
@@ -87,8 +78,8 @@
         },         
         oncreate() {            
             const {min, max, low, high, orientation, isRange} = this.get();
-            const {width, height} = this.refs.right.getBoundingClientRect();            
-            this._size = isRange ? 2 * width : width;
+            const height = this.refs.right.getBoundingClientRect().height;
+            this._size = isRange ? 2 * height : height;
             this._ratio = this._getRatio(min, max, this._size);
             this._updateDom(min, max, low, high, this._size, this._ratio);
         },
