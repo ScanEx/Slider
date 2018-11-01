@@ -424,7 +424,7 @@ function create_main_fragment(component, ctx) {
 
 	var if_block0 = ctx.isRange && create_if_block_1(component, ctx);
 
-	var if_block1 = ctx.tooltip && create_if_block(component, ctx);
+	var if_block1 = ctx.tooltip.toString().toLowerCase() === 'true' && create_if_block(component, ctx);
 
 	function mousedown_handler(event) {
 		component.start(event, 'right');
@@ -442,7 +442,7 @@ function create_main_fragment(component, ctx) {
 			text1 = createText("\r\n    ");
 			addListener(div0, "mousedown", mousedown_handler);
 			div0.className = "right svelte-1s8z56a";
-			addLoc(div0, file, 11, 12, 462);
+			addLoc(div0, file, 11, 12, 498);
 			div1.className = "range svelte-1s8z56a";
 			addLoc(div1, file, 3, 8, 131);
 			div2.className = "bar svelte-1s8z56a";
@@ -486,7 +486,7 @@ function create_main_fragment(component, ctx) {
 				if_block0 = null;
 			}
 
-			if (ctx.tooltip) {
+			if (ctx.tooltip.toString().toLowerCase() === 'true') {
 				if (if_block1) {
 					if_block1.p(changed, ctx);
 				} else {
@@ -535,7 +535,7 @@ function create_main_fragment(component, ctx) {
 function create_if_block_1(component, ctx) {
 	var div;
 
-	var if_block = ctx.tooltip && create_if_block_2(component, ctx);
+	var if_block = ctx.tooltip.toString().toLowerCase() === 'true' && create_if_block_2(component, ctx);
 
 	function mousedown_handler(event) {
 		component.start(event, 'left');
@@ -557,7 +557,7 @@ function create_if_block_1(component, ctx) {
 		},
 
 		p: function update(changed, ctx) {
-			if (ctx.tooltip) {
+			if (ctx.tooltip.toString().toLowerCase() === 'true') {
 				if (if_block) {
 					if_block.p(changed, ctx);
 				} else {
@@ -583,7 +583,7 @@ function create_if_block_1(component, ctx) {
 	};
 }
 
-// (7:16) {#if tooltip}
+// (7:16) {#if tooltip.toString().toLowerCase() === 'true'}
 function create_if_block_2(component, ctx) {
 	var div,
 	    text_value = ctx.parseFloat(ctx.low).toFixed(),
@@ -594,7 +594,7 @@ function create_if_block_2(component, ctx) {
 			div = createElement("div");
 			text = createText(text_value);
 			div.className = "left-tick svelte-1s8z56a";
-			addLoc(div, file, 7, 20, 317);
+			addLoc(div, file, 7, 20, 353);
 		},
 
 		m: function mount(target, anchor) {
@@ -619,7 +619,7 @@ function create_if_block_2(component, ctx) {
 	};
 }
 
-// (13:16) {#if tooltip}
+// (13:16) {#if tooltip.toString().toLowerCase() === 'true'}
 function create_if_block(component, ctx) {
 	var div,
 	    text_value = ctx.parseFloat(ctx.high).toFixed(),
@@ -630,7 +630,7 @@ function create_if_block(component, ctx) {
 			div = createElement("div");
 			text = createText(text_value);
 			div.className = "right-tick svelte-1s8z56a";
-			addLoc(div, file, 13, 20, 581);
+			addLoc(div, file, 13, 20, 653);
 		},
 
 		m: function mount(target, anchor) {
@@ -902,7 +902,7 @@ function create_main_fragment$1(component, ctx) {
 
 	var if_block0 = ctx.isRange && create_if_block_1$1(component, ctx);
 
-	var if_block1 = ctx.tooltip && create_if_block$1(component, ctx);
+	var if_block1 = ctx.tooltip.toString().toLowerCase() === 'true' && create_if_block$1(component, ctx);
 
 	function mousedown_handler(event) {
 		component.start(event, 'right');
@@ -920,7 +920,7 @@ function create_main_fragment$1(component, ctx) {
 			text1 = createText("\r\n    ");
 			addListener(div0, "mousedown", mousedown_handler);
 			div0.className = "right svelte-cczca1";
-			addLoc(div0, file$1, 11, 12, 462);
+			addLoc(div0, file$1, 11, 12, 498);
 			div1.className = "range svelte-cczca1";
 			addLoc(div1, file$1, 3, 8, 131);
 			div2.className = "bar svelte-cczca1";
@@ -964,7 +964,7 @@ function create_main_fragment$1(component, ctx) {
 				if_block0 = null;
 			}
 
-			if (ctx.tooltip) {
+			if (ctx.tooltip.toString().toLowerCase() === 'true') {
 				if (if_block1) {
 					if_block1.p(changed, ctx);
 				} else {
@@ -1013,7 +1013,7 @@ function create_main_fragment$1(component, ctx) {
 function create_if_block_1$1(component, ctx) {
 	var div;
 
-	var if_block = ctx.tooltip && create_if_block_2$1(component, ctx);
+	var if_block = ctx.tooltip.toString().toLowerCase() === 'true' && create_if_block_2$1(component, ctx);
 
 	function mousedown_handler(event) {
 		component.start(event, 'left');
@@ -1035,7 +1035,7 @@ function create_if_block_1$1(component, ctx) {
 		},
 
 		p: function update(changed, ctx) {
-			if (ctx.tooltip) {
+			if (ctx.tooltip.toString().toLowerCase() === 'true') {
 				if (if_block) {
 					if_block.p(changed, ctx);
 				} else {
@@ -1061,7 +1061,7 @@ function create_if_block_1$1(component, ctx) {
 	};
 }
 
-// (7:16) {#if tooltip}
+// (7:16) {#if tooltip.toString().toLowerCase() === 'true'}
 function create_if_block_2$1(component, ctx) {
 	var div,
 	    text_value = ctx.parseFloat(ctx.low).toFixed(),
@@ -1072,7 +1072,7 @@ function create_if_block_2$1(component, ctx) {
 			div = createElement("div");
 			text = createText(text_value);
 			div.className = "left-tick svelte-cczca1";
-			addLoc(div, file$1, 7, 20, 317);
+			addLoc(div, file$1, 7, 20, 353);
 		},
 
 		m: function mount(target, anchor) {
@@ -1097,7 +1097,7 @@ function create_if_block_2$1(component, ctx) {
 	};
 }
 
-// (13:16) {#if tooltip}
+// (13:16) {#if tooltip.toString().toLowerCase() === 'true'}
 function create_if_block$1(component, ctx) {
 	var div,
 	    text_value = ctx.parseFloat(ctx.high).toFixed(),
@@ -1108,7 +1108,7 @@ function create_if_block$1(component, ctx) {
 			div = createElement("div");
 			text = createText(text_value);
 			div.className = "right-tick svelte-cczca1";
-			addLoc(div, file$1, 13, 20, 581);
+			addLoc(div, file$1, 13, 20, 653);
 		},
 
 		m: function mount(target, anchor) {

@@ -4,13 +4,13 @@
         <div class="range" ref:range>
             {#if isRange}
             <div class="left" ref:left on:mousedown="start(event, 'left')">
-                {#if tooltip}
+                {#if tooltip.toString().toLowerCase() === 'true'}
                     <div class="left-tick" ref:leftTick>{parseFloat(low).toFixed()}</div>
                 {/if}
             </div>
             {/if}
             <div class="right" ref:right on:mousedown="start(event, 'right')">
-                {#if tooltip}
+                {#if tooltip.toString().toLowerCase() === 'true'}
                     <div class="right-tick" ref:rightTick>{parseFloat(high).toFixed()}</div>
                 {/if}
             </div>
