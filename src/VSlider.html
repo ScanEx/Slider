@@ -2,7 +2,7 @@
 <div class="slider">
     <div class="bar" ref:bar>
         <div class="range" ref:range>
-            {#if !isNaN(parseFloat(low))}
+            {#if isRange}
             <div class="left" ref:left on:mousedown="start(event, 'left')">
                 {#if tooltip}
                     <div class="left-tick" ref:leftTick>{low.toFixed()}</div>
@@ -71,27 +71,30 @@
                 step: 0,
                 tooltip: false, 
             };
-        },           
+        },
+        computed: {
+            isRange: ({low}) => !isNaN(parseFloat(low))
+        },         
         oncreate() {            
-            const {min, max, low, high, orientation} = this.get();
+            const {min, max, low, high, orientation, isRange} = this.get();
             const {width, height} = this.refs.right.getBoundingClientRect();            
-            this._tick = width;
-            this._ratio = this._getRatio(min, max, this._tick);
-            this._updateDom(min, max, low, high, this._tick, this._ratio);
+            this._size = isRange ? 2 * width : width;
+            this._ratio = this._getRatio(min, max, this._size);
+            this._updateDom(min, max, low, high, this._size, this._ratio);
         },
         onupdate({changed, current, previous}) {            
             if (changed.low) {
                 const lo = parseFloat(current.low);
                 if (!isNaN(lo)) {
-                    const {min, max, high} = this.get();
-                    this._updateDom (min, max, lo, high, this._tick, this._ratio);                    
+                    const {min, max, high} = this.get();                    
+                    this._updateDom (min, max, lo, high, this._size, this._ratio);
                 }
             }
             if (changed.high) {
                 const hi = parseFloat(current.high);
                 if (!isNaN(hi)) {
                     const {min, max, low} = this.get();
-                    this._updateDom (min, max, low, hi, this._tick, this._ratio);                    
+                    this._updateDom (min, max, low, hi, this._size, this._ratio);
                 }
             }
         },
@@ -148,8 +151,11 @@
                 }
             },
             stop (e) {
-                this._moving = false;                
-                this.refs.leftTick.style.display = 'none';
+                this._moving = false;
+                const {isRange} = this.get();
+                if (isRange) {
+                    this.refs.leftTick.style.display = 'none';
+                }                
                 this.refs.rightTick.style.display = 'none';
                 this._target = null;                
             },
@@ -158,23 +164,23 @@
                 const z = parseFloat(max);        
                 if (!isNaN(a) && !isNaN(z)) {                            
                     const {width, height} = this.refs.bar.getBoundingClientRect();
-                    return (z - a) / (height - 2 * size);
+                    return (z - a) / (height - size);
                 }
                 else {
                     return NaN;
                 }
             },
-            _updateDom (min, max, low, high, tick, ratio) {
+            _updateDom (min, max, low, high, size, ratio) {
                 const a = parseFloat(min);
                 const z = parseFloat(max);
                 const lo = parseFloat(low);
                 const hi = parseFloat(high);
-                if (!isNaN(a) && !isNaN(z) && !isNaN(hi) && a <= hi && hi <= z) {                                        
-                    const h = (!isNaN(lo) && a <= lo && lo <= hi ? (hi - lo) : hi) / ratio + 2 * tick;
+                if (!isNaN(a) && !isNaN(z) && !isNaN(hi) && a <= hi && hi <= z) {                    
+                    const h = (!isNaN(lo) && a <= lo && lo <= hi ? (hi - lo) : hi) / ratio + size;
                     this.refs.range.style.height = `${Math.round(h)}px`;
+                    this.refs.right.style.top = `${h - size}px`;
                     if (!isNaN(lo) && a <= lo && lo <= hi) {
-                        this.refs.range.style.top = `${Math.round(lo / ratio)}px`;
-                        this.refs.right.style.top = `${h - 2 * tick}px`;                        
+                        this.refs.range.style.top = `${Math.round(lo / ratio)}px`;                        
                     }
                 }
             }
