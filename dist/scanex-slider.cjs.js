@@ -251,18 +251,6 @@ function data() {
 		tooltip: false
 	};
 }
-function hasTooltip(_ref2) {
-	var tooltip = _ref2.tooltip;
-
-	switch (typeof tooltip === 'undefined' ? 'undefined' : _typeof(tooltip)) {
-		case 'boolean':
-			return tooltip;
-		case 'string':
-			return tooltip.toLowerCase() === 'true';
-		default:
-			return false;
-	}
-}
 var methods = {
 	start: function start(e, target) {
 		e.stopPropagation();
@@ -373,6 +361,18 @@ var methods = {
 				this.refs.range.style.left = Math.round(lo / ratio) + 'px';
 			}
 		}
+	},
+	hasTooltip: function hasTooltip(_ref2) {
+		var tooltip = _ref2.tooltip;
+
+		switch (typeof tooltip === 'undefined' ? 'undefined' : _typeof(tooltip)) {
+			case 'boolean':
+				return tooltip;
+			case 'string':
+				return tooltip.toLowerCase() === 'true';
+			default:
+				return false;
+		}
 	}
 };
 
@@ -444,7 +444,7 @@ function create_main_fragment(component, ctx) {
 
 	var if_block0 = ctx.isRange && create_if_block_1(component, ctx);
 
-	var if_block1 = hasTooltip(ctx.tooltip) && create_if_block(component, ctx);
+	var if_block1 = ctx.hasTooltip(ctx.tooltip) && create_if_block(component, ctx);
 
 	function mousedown_handler(event) {
 		component.start(event, 'right');
@@ -506,7 +506,7 @@ function create_main_fragment(component, ctx) {
 				if_block0 = null;
 			}
 
-			if (hasTooltip(ctx.tooltip)) {
+			if (ctx.hasTooltip(ctx.tooltip)) {
 				if (if_block1) {
 					if_block1.p(changed, ctx);
 				} else {
@@ -555,7 +555,7 @@ function create_main_fragment(component, ctx) {
 function create_if_block_1(component, ctx) {
 	var div;
 
-	var if_block = hasTooltip(ctx.tooltip) && create_if_block_2(component, ctx);
+	var if_block = ctx.hasTooltip(ctx.tooltip) && create_if_block_2(component, ctx);
 
 	function mousedown_handler(event) {
 		component.start(event, 'left');
@@ -577,7 +577,7 @@ function create_if_block_1(component, ctx) {
 		},
 
 		p: function update(changed, ctx) {
-			if (hasTooltip(ctx.tooltip)) {
+			if (ctx.hasTooltip(ctx.tooltip)) {
 				if (if_block) {
 					if_block.p(changed, ctx);
 				} else {
@@ -690,6 +690,7 @@ function HSlider(options) {
 	this._recompute({ low: 1 }, this._state);
 	if (!('low' in this._state)) console.warn("<HSlider> was created without expected data property 'low'");
 
+	if (!('hasTooltip' in this._state)) console.warn("<HSlider> was created without expected data property 'hasTooltip'");
 	if (!('tooltip' in this._state)) console.warn("<HSlider> was created without expected data property 'tooltip'");
 
 	if (!('high' in this._state)) console.warn("<HSlider> was created without expected data property 'high'");
@@ -747,18 +748,6 @@ function data$1() {
 		step: 0,
 		tooltip: false
 	};
-}
-function hasTooltip$1(_ref2) {
-	var tooltip = _ref2.tooltip;
-
-	switch (typeof tooltip === 'undefined' ? 'undefined' : _typeof(tooltip)) {
-		case 'boolean':
-			return tooltip;
-		case 'string':
-			return tooltip.toLowerCase() === 'true';
-		default:
-			return false;
-	}
 }
 var methods$1 = {
 	start: function start(e, target) {
@@ -871,6 +860,18 @@ var methods$1 = {
 				this.refs.range.style.top = Math.round(lo / ratio) + 'px';
 			}
 		}
+	},
+	hasTooltip: function hasTooltip(_ref2) {
+		var tooltip = _ref2.tooltip;
+
+		switch (typeof tooltip === 'undefined' ? 'undefined' : _typeof(tooltip)) {
+			case 'boolean':
+				return tooltip;
+			case 'string':
+				return tooltip.toLowerCase() === 'true';
+			default:
+				return false;
+		}
 	}
 };
 
@@ -942,7 +943,7 @@ function create_main_fragment$1(component, ctx) {
 
 	var if_block0 = ctx.isRange && create_if_block_1$1(component, ctx);
 
-	var if_block1 = hasTooltip$1(ctx.tooltip) && create_if_block$1(component, ctx);
+	var if_block1 = ctx.hasTooltip(ctx.tooltip) && create_if_block$1(component, ctx);
 
 	function mousedown_handler(event) {
 		component.start(event, 'right');
@@ -1004,7 +1005,7 @@ function create_main_fragment$1(component, ctx) {
 				if_block0 = null;
 			}
 
-			if (hasTooltip$1(ctx.tooltip)) {
+			if (ctx.hasTooltip(ctx.tooltip)) {
 				if (if_block1) {
 					if_block1.p(changed, ctx);
 				} else {
@@ -1053,7 +1054,7 @@ function create_main_fragment$1(component, ctx) {
 function create_if_block_1$1(component, ctx) {
 	var div;
 
-	var if_block = hasTooltip$1(ctx.tooltip) && create_if_block_2$1(component, ctx);
+	var if_block = ctx.hasTooltip(ctx.tooltip) && create_if_block_2$1(component, ctx);
 
 	function mousedown_handler(event) {
 		component.start(event, 'left');
@@ -1075,7 +1076,7 @@ function create_if_block_1$1(component, ctx) {
 		},
 
 		p: function update(changed, ctx) {
-			if (hasTooltip$1(ctx.tooltip)) {
+			if (ctx.hasTooltip(ctx.tooltip)) {
 				if (if_block) {
 					if_block.p(changed, ctx);
 				} else {
@@ -1188,6 +1189,7 @@ function VSlider(options) {
 	this._recompute({ low: 1 }, this._state);
 	if (!('low' in this._state)) console.warn("<VSlider> was created without expected data property 'low'");
 
+	if (!('hasTooltip' in this._state)) console.warn("<VSlider> was created without expected data property 'hasTooltip'");
 	if (!('tooltip' in this._state)) console.warn("<VSlider> was created without expected data property 'tooltip'");
 
 	if (!('high' in this._state)) console.warn("<VSlider> was created without expected data property 'high'");

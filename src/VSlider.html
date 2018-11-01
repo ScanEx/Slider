@@ -189,9 +189,7 @@
                         this.refs.range.style.top = `${Math.round(lo / ratio)}px`;                        
                     }
                 }
-            }
-        },
-        helpers: {
+            },
             hasTooltip ({tooltip}) {
                 switch (typeof tooltip) {
                     case 'boolean':
@@ -202,6 +200,6 @@
                         return false;
                 }                
             }
-        }
+        },        
     };
 </script>
