@@ -4,13 +4,13 @@
         <div class="range" ref:range>
             {#if isRange}
             <div class="left" ref:left on:mousedown="start(event, 'left')">
-                {#if tooltip.toString().toLowerCase() === 'true'}
+                {#if hasTooltip(tooltip)}
                     <div class="left-tick" ref:leftTick>{parseFloat(low).toFixed()}</div>
                 {/if}
             </div>
             {/if}
             <div class="right" ref:right on:mousedown="start(event, 'right')">
-                {#if tooltip.toString().toLowerCase() === 'true'}
+                {#if hasTooltip(tooltip)}
                     <div class="right-tick" ref:rightTick>{parseFloat(high).toFixed()}</div>
                 {/if}
             </div>
@@ -79,7 +79,7 @@
             };
         },  
         computed: {
-            isRange: ({low}) => !isNaN(parseFloat(low))
+            isRange: ({low}) => !isNaN(parseFloat(low)),            
         },      
         oncreate() {            
             const {min, max, low, high, orientation, isRange} = this.get();
@@ -108,17 +108,21 @@
             start (e, target) {                
                 e.stopPropagation();
                 this._moving = true;                
-                const {low, high} = this.get();
+                const {low, high, tooltip} = this.get();
                 this._startX = e.x;                
                 this._target = target;
                 switch (target) {
                     case 'left':
                         this._start = parseFloat (low);
-                        this.refs.leftTick.style.display = 'block';
+                        if (this.hasTooltip (tooltip)) {
+                            this.refs.leftTick.style.display = 'block';
+                        }                        
                         break;
                     case 'right':
                         this._start = parseFloat (high);
-                        this.refs.rightTick.style.display = 'block';
+                        if (this.hasTooltip(tooltip)) {
+                            this.refs.rightTick.style.display = 'block';
+                        }                        
                         break;
                     default:
                         break;
@@ -158,11 +162,13 @@
             },
             stop (e) {
                 this._moving = false;
-                const {isRange} = this.get();
-                if (isRange) {
-                    this.refs.leftTick.style.display = 'none';
+                const {isRange, tooltip} = this.get();
+                if (this.hasTooltip(tooltip)) {
+                    if (isRange) {
+                        this.refs.leftTick.style.display = 'none';
+                    }
+                    this.refs.rightTick.style.display = 'none';              
                 }                
-                this.refs.rightTick.style.display = 'none';              
                 this._target = null;
             },
             _getRatio (min, max, size) {
@@ -189,5 +195,17 @@
                 }
             }
         },
+        helpers: {
+            hasTooltip ({tooltip}) {
+                switch (typeof tooltip) {
+                    case 'boolean':
+                        return tooltip;
+                    case 'string':
+                        return tooltip.toLowerCase() === 'true';
+                    default:
+                        return false;
+                }                
+            }
+        }        
     };
 </script>

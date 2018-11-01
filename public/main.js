@@ -252,6 +252,18 @@ var Slider = (function () {
   		tooltip: false
   	};
   }
+  function hasTooltip(_ref2) {
+  	var tooltip = _ref2.tooltip;
+
+  	switch (typeof tooltip === 'undefined' ? 'undefined' : _typeof(tooltip)) {
+  		case 'boolean':
+  			return tooltip;
+  		case 'string':
+  			return tooltip.toLowerCase() === 'true';
+  		default:
+  			return false;
+  	}
+  }
   var methods = {
   	start: function start(e, target) {
   		e.stopPropagation();
@@ -259,18 +271,23 @@ var Slider = (function () {
 
   		var _get = this.get(),
   		    low = _get.low,
-  		    high = _get.high;
+  		    high = _get.high,
+  		    tooltip = _get.tooltip;
 
   		this._startX = e.x;
   		this._target = target;
   		switch (target) {
   			case 'left':
   				this._start = parseFloat(low);
-  				this.refs.leftTick.style.display = 'block';
+  				if (this.hasTooltip(tooltip)) {
+  					this.refs.leftTick.style.display = 'block';
+  				}
   				break;
   			case 'right':
   				this._start = parseFloat(high);
-  				this.refs.rightTick.style.display = 'block';
+  				if (this.hasTooltip(tooltip)) {
+  					this.refs.rightTick.style.display = 'block';
+  				}
   				break;
   			default:
   				break;
@@ -322,12 +339,15 @@ var Slider = (function () {
   		this._moving = false;
 
   		var _get3 = this.get(),
-  		    isRange = _get3.isRange;
+  		    isRange = _get3.isRange,
+  		    tooltip = _get3.tooltip;
 
-  		if (isRange) {
-  			this.refs.leftTick.style.display = 'none';
+  		if (this.hasTooltip(tooltip)) {
+  			if (isRange) {
+  				this.refs.leftTick.style.display = 'none';
+  			}
+  			this.refs.rightTick.style.display = 'none';
   		}
-  		this.refs.rightTick.style.display = 'none';
   		this._target = null;
   	},
   	_getRatio: function _getRatio(min, max, size) {
@@ -374,10 +394,10 @@ var Slider = (function () {
   	this._ratio = this._getRatio(min, max, this._size);
   	this._updateDom(min, max, low, high, this._size, this._ratio);
   }
-  function onupdate(_ref2) {
-  	var changed = _ref2.changed,
-  	    current = _ref2.current,
-  	    previous = _ref2.previous;
+  function onupdate(_ref3) {
+  	var changed = _ref3.changed,
+  	    current = _ref3.current,
+  	    previous = _ref3.previous;
 
   	if (changed.low) {
   		var lo = parseFloat(current.low);
@@ -425,7 +445,7 @@ var Slider = (function () {
 
   	var if_block0 = ctx.isRange && create_if_block_1(component, ctx);
 
-  	var if_block1 = ctx.tooltip.toString().toLowerCase() === 'true' && create_if_block(component, ctx);
+  	var if_block1 = hasTooltip(ctx.tooltip) && create_if_block(component, ctx);
 
   	function mousedown_handler(event) {
   		component.start(event, 'right');
@@ -443,7 +463,7 @@ var Slider = (function () {
   			text1 = createText("\r\n    ");
   			addListener(div0, "mousedown", mousedown_handler);
   			div0.className = "right svelte-1s8z56a";
-  			addLoc(div0, file, 11, 12, 498);
+  			addLoc(div0, file, 11, 12, 474);
   			div1.className = "range svelte-1s8z56a";
   			addLoc(div1, file, 3, 8, 131);
   			div2.className = "bar svelte-1s8z56a";
@@ -487,7 +507,7 @@ var Slider = (function () {
   				if_block0 = null;
   			}
 
-  			if (ctx.tooltip.toString().toLowerCase() === 'true') {
+  			if (hasTooltip(ctx.tooltip)) {
   				if (if_block1) {
   					if_block1.p(changed, ctx);
   				} else {
@@ -536,7 +556,7 @@ var Slider = (function () {
   function create_if_block_1(component, ctx) {
   	var div;
 
-  	var if_block = ctx.tooltip.toString().toLowerCase() === 'true' && create_if_block_2(component, ctx);
+  	var if_block = hasTooltip(ctx.tooltip) && create_if_block_2(component, ctx);
 
   	function mousedown_handler(event) {
   		component.start(event, 'left');
@@ -558,7 +578,7 @@ var Slider = (function () {
   		},
 
   		p: function update(changed, ctx) {
-  			if (ctx.tooltip.toString().toLowerCase() === 'true') {
+  			if (hasTooltip(ctx.tooltip)) {
   				if (if_block) {
   					if_block.p(changed, ctx);
   				} else {
@@ -584,7 +604,7 @@ var Slider = (function () {
   	};
   }
 
-  // (7:16) {#if tooltip.toString().toLowerCase() === 'true'}
+  // (7:16) {#if hasTooltip(tooltip)}
   function create_if_block_2(component, ctx) {
   	var div,
   	    text_value = ctx.parseFloat(ctx.low).toFixed(),
@@ -595,7 +615,7 @@ var Slider = (function () {
   			div = createElement("div");
   			text = createText(text_value);
   			div.className = "left-tick svelte-1s8z56a";
-  			addLoc(div, file, 7, 20, 353);
+  			addLoc(div, file, 7, 20, 329);
   		},
 
   		m: function mount(target, anchor) {
@@ -620,7 +640,7 @@ var Slider = (function () {
   	};
   }
 
-  // (13:16) {#if tooltip.toString().toLowerCase() === 'true'}
+  // (13:16) {#if hasTooltip(tooltip)}
   function create_if_block(component, ctx) {
   	var div,
   	    text_value = ctx.parseFloat(ctx.high).toFixed(),
@@ -631,7 +651,7 @@ var Slider = (function () {
   			div = createElement("div");
   			text = createText(text_value);
   			div.className = "right-tick svelte-1s8z56a";
-  			addLoc(div, file, 13, 20, 653);
+  			addLoc(div, file, 13, 20, 605);
   		},
 
   		m: function mount(target, anchor) {
@@ -729,6 +749,18 @@ var Slider = (function () {
   		tooltip: false
   	};
   }
+  function hasTooltip$1(_ref2) {
+  	var tooltip = _ref2.tooltip;
+
+  	switch (typeof tooltip === 'undefined' ? 'undefined' : _typeof(tooltip)) {
+  		case 'boolean':
+  			return tooltip;
+  		case 'string':
+  			return tooltip.toLowerCase() === 'true';
+  		default:
+  			return false;
+  	}
+  }
   var methods$1 = {
   	start: function start(e, target) {
   		e.stopPropagation();
@@ -736,18 +768,23 @@ var Slider = (function () {
 
   		var _get = this.get(),
   		    low = _get.low,
-  		    high = _get.high;
+  		    high = _get.high,
+  		    tooltip = _get.tooltip;
 
   		this._startX = e.y;
   		this._target = target;
   		switch (target) {
   			case 'left':
   				this._start = parseFloat(low);
-  				this.refs.leftTick.style.display = 'block';
+  				if (this.hasTooltip(tooltip)) {
+  					this.refs.leftTick.style.display = 'block';
+  				}
   				break;
   			case 'right':
   				this._start = parseFloat(high);
-  				this.refs.rightTick.style.display = 'block';
+  				if (this.hasTooltip(tooltip)) {
+  					this.refs.rightTick.style.display = 'block';
+  				}
   				break;
   			default:
   				break;
@@ -798,12 +835,15 @@ var Slider = (function () {
   		this._moving = false;
 
   		var _get3 = this.get(),
-  		    isRange = _get3.isRange;
+  		    isRange = _get3.isRange,
+  		    tooltip = _get3.tooltip;
 
-  		if (isRange) {
-  			this.refs.leftTick.style.display = 'none';
+  		if (this.hasTooltip(tooltip)) {
+  			if (isRange) {
+  				this.refs.leftTick.style.display = 'none';
+  			}
+  			this.refs.rightTick.style.display = 'none';
   		}
-  		this.refs.rightTick.style.display = 'none';
   		this._target = null;
   	},
   	_getRatio: function _getRatio(min, max, size) {
@@ -852,10 +892,10 @@ var Slider = (function () {
   	this._ratio = this._getRatio(min, max, this._size);
   	this._updateDom(min, max, low, high, this._size, this._ratio);
   }
-  function onupdate$1(_ref2) {
-  	var changed = _ref2.changed,
-  	    current = _ref2.current,
-  	    previous = _ref2.previous;
+  function onupdate$1(_ref3) {
+  	var changed = _ref3.changed,
+  	    current = _ref3.current,
+  	    previous = _ref3.previous;
 
   	if (changed.low) {
   		var lo = parseFloat(current.low);
@@ -903,7 +943,7 @@ var Slider = (function () {
 
   	var if_block0 = ctx.isRange && create_if_block_1$1(component, ctx);
 
-  	var if_block1 = ctx.tooltip.toString().toLowerCase() === 'true' && create_if_block$1(component, ctx);
+  	var if_block1 = hasTooltip$1(ctx.tooltip) && create_if_block$1(component, ctx);
 
   	function mousedown_handler(event) {
   		component.start(event, 'right');
@@ -921,7 +961,7 @@ var Slider = (function () {
   			text1 = createText("\r\n    ");
   			addListener(div0, "mousedown", mousedown_handler);
   			div0.className = "right svelte-cczca1";
-  			addLoc(div0, file$1, 11, 12, 498);
+  			addLoc(div0, file$1, 11, 12, 474);
   			div1.className = "range svelte-cczca1";
   			addLoc(div1, file$1, 3, 8, 131);
   			div2.className = "bar svelte-cczca1";
@@ -965,7 +1005,7 @@ var Slider = (function () {
   				if_block0 = null;
   			}
 
-  			if (ctx.tooltip.toString().toLowerCase() === 'true') {
+  			if (hasTooltip$1(ctx.tooltip)) {
   				if (if_block1) {
   					if_block1.p(changed, ctx);
   				} else {
@@ -1014,7 +1054,7 @@ var Slider = (function () {
   function create_if_block_1$1(component, ctx) {
   	var div;
 
-  	var if_block = ctx.tooltip.toString().toLowerCase() === 'true' && create_if_block_2$1(component, ctx);
+  	var if_block = hasTooltip$1(ctx.tooltip) && create_if_block_2$1(component, ctx);
 
   	function mousedown_handler(event) {
   		component.start(event, 'left');
@@ -1036,7 +1076,7 @@ var Slider = (function () {
   		},
 
   		p: function update(changed, ctx) {
-  			if (ctx.tooltip.toString().toLowerCase() === 'true') {
+  			if (hasTooltip$1(ctx.tooltip)) {
   				if (if_block) {
   					if_block.p(changed, ctx);
   				} else {
@@ -1062,7 +1102,7 @@ var Slider = (function () {
   	};
   }
 
-  // (7:16) {#if tooltip.toString().toLowerCase() === 'true'}
+  // (7:16) {#if hasTooltip(tooltip)}
   function create_if_block_2$1(component, ctx) {
   	var div,
   	    text_value = ctx.parseFloat(ctx.low).toFixed(),
@@ -1073,7 +1113,7 @@ var Slider = (function () {
   			div = createElement("div");
   			text = createText(text_value);
   			div.className = "left-tick svelte-cczca1";
-  			addLoc(div, file$1, 7, 20, 353);
+  			addLoc(div, file$1, 7, 20, 329);
   		},
 
   		m: function mount(target, anchor) {
@@ -1098,7 +1138,7 @@ var Slider = (function () {
   	};
   }
 
-  // (13:16) {#if tooltip.toString().toLowerCase() === 'true'}
+  // (13:16) {#if hasTooltip(tooltip)}
   function create_if_block$1(component, ctx) {
   	var div,
   	    text_value = ctx.parseFloat(ctx.high).toFixed(),
@@ -1109,7 +1149,7 @@ var Slider = (function () {
   			div = createElement("div");
   			text = createText(text_value);
   			div.className = "right-tick svelte-cczca1";
-  			addLoc(div, file$1, 13, 20, 653);
+  			addLoc(div, file$1, 13, 20, 605);
   		},
 
   		m: function mount(target, anchor) {
