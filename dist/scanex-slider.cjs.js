@@ -442,7 +442,7 @@ function create_main_fragment(component, ctx) {
 			text1 = createText("\r\n        ");
 			addListener(div0, "mousedown", mousedown_handler);
 			div0.className = "right svelte-1s8z56a";
-			addLoc(div0, file, 11, 12, 450);
+			addLoc(div0, file, 11, 12, 462);
 			div1.className = "range svelte-1s8z56a";
 			addLoc(div1, file, 3, 8, 131);
 			div2.className = "bar svelte-1s8z56a";
@@ -587,7 +587,7 @@ function create_if_block_1(component, ctx) {
 // (7:16) {#if tooltip}
 function create_if_block_2(component, ctx) {
 	var div,
-	    text_value = ctx.low.toFixed(),
+	    text_value = ctx.parseFloat(ctx.low).toFixed(),
 	    text;
 
 	return {
@@ -605,7 +605,7 @@ function create_if_block_2(component, ctx) {
 		},
 
 		p: function update(changed, ctx) {
-			if (changed.low && text_value !== (text_value = ctx.low.toFixed())) {
+			if ((changed.parseFloat || changed.low) && text_value !== (text_value = ctx.parseFloat(ctx.low).toFixed())) {
 				setData(text, text_value);
 			}
 		},
@@ -623,7 +623,7 @@ function create_if_block_2(component, ctx) {
 // (13:16) {#if tooltip}
 function create_if_block(component, ctx) {
 	var div,
-	    text_value = ctx.high.toFixed(),
+	    text_value = ctx.parseFloat(ctx.high).toFixed(),
 	    text;
 
 	return {
@@ -631,7 +631,7 @@ function create_if_block(component, ctx) {
 			div = createElement("div");
 			text = createText(text_value);
 			div.className = "right-tick svelte-1s8z56a";
-			addLoc(div, file, 13, 20, 569);
+			addLoc(div, file, 13, 20, 581);
 		},
 
 		m: function mount(target, anchor) {
@@ -641,7 +641,7 @@ function create_if_block(component, ctx) {
 		},
 
 		p: function update(changed, ctx) {
-			if (changed.high && text_value !== (text_value = ctx.high.toFixed())) {
+			if ((changed.parseFloat || changed.high) && text_value !== (text_value = ctx.parseFloat(ctx.high).toFixed())) {
 				setData(text, text_value);
 			}
 		},
@@ -666,12 +666,13 @@ function HSlider(options) {
 
 	init(this, options);
 	this.refs = {};
-	this._state = assign(data(), options.data);
+	this._state = assign(assign({ parseFloat: parseFloat }, data()), options.data);
 
 	this._recompute({ low: 1 }, this._state);
 	if (!('low' in this._state)) console.warn("<HSlider> was created without expected data property 'low'");
 
 	if (!('tooltip' in this._state)) console.warn("<HSlider> was created without expected data property 'tooltip'");
+
 	if (!('high' in this._state)) console.warn("<HSlider> was created without expected data property 'high'");
 	this._intro = !!options.intro;
 	this._handlers.update = [onupdate];
@@ -920,7 +921,7 @@ function create_main_fragment$1(component, ctx) {
 			text1 = createText("\r\n        ");
 			addListener(div0, "mousedown", mousedown_handler);
 			div0.className = "right svelte-cczca1";
-			addLoc(div0, file$1, 11, 12, 450);
+			addLoc(div0, file$1, 11, 12, 462);
 			div1.className = "range svelte-cczca1";
 			addLoc(div1, file$1, 3, 8, 131);
 			div2.className = "bar svelte-cczca1";
@@ -1065,7 +1066,7 @@ function create_if_block_1$1(component, ctx) {
 // (7:16) {#if tooltip}
 function create_if_block_2$1(component, ctx) {
 	var div,
-	    text_value = ctx.low.toFixed(),
+	    text_value = ctx.parseFloat(ctx.low).toFixed(),
 	    text;
 
 	return {
@@ -1083,7 +1084,7 @@ function create_if_block_2$1(component, ctx) {
 		},
 
 		p: function update(changed, ctx) {
-			if (changed.low && text_value !== (text_value = ctx.low.toFixed())) {
+			if ((changed.parseFloat || changed.low) && text_value !== (text_value = ctx.parseFloat(ctx.low).toFixed())) {
 				setData(text, text_value);
 			}
 		},
@@ -1101,7 +1102,7 @@ function create_if_block_2$1(component, ctx) {
 // (13:16) {#if tooltip}
 function create_if_block$1(component, ctx) {
 	var div,
-	    text_value = ctx.high.toFixed(),
+	    text_value = ctx.parseFloat(ctx.high).toFixed(),
 	    text;
 
 	return {
@@ -1109,7 +1110,7 @@ function create_if_block$1(component, ctx) {
 			div = createElement("div");
 			text = createText(text_value);
 			div.className = "right-tick svelte-cczca1";
-			addLoc(div, file$1, 13, 20, 569);
+			addLoc(div, file$1, 13, 20, 581);
 		},
 
 		m: function mount(target, anchor) {
@@ -1119,7 +1120,7 @@ function create_if_block$1(component, ctx) {
 		},
 
 		p: function update(changed, ctx) {
-			if (changed.high && text_value !== (text_value = ctx.high.toFixed())) {
+			if ((changed.parseFloat || changed.high) && text_value !== (text_value = ctx.parseFloat(ctx.high).toFixed())) {
 				setData(text, text_value);
 			}
 		},
@@ -1144,12 +1145,13 @@ function VSlider(options) {
 
 	init(this, options);
 	this.refs = {};
-	this._state = assign(data$1(), options.data);
+	this._state = assign(assign({ parseFloat: parseFloat }, data$1()), options.data);
 
 	this._recompute({ low: 1 }, this._state);
 	if (!('low' in this._state)) console.warn("<VSlider> was created without expected data property 'low'");
 
 	if (!('tooltip' in this._state)) console.warn("<VSlider> was created without expected data property 'tooltip'");
+
 	if (!('high' in this._state)) console.warn("<VSlider> was created without expected data property 'high'");
 	this._intro = !!options.intro;
 	this._handlers.update = [onupdate$1];

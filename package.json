@@ -21,7 +21,6 @@
     "url": "https://github.com/Scanex/Slider/issues"
   },
   "homepage": "https://github.com/Scanex/Slider#readme",
-  "dependencies": {},
   "devDependencies": {
     "babel-core": "^6.26.3",
     "babel-plugin-external-helpers": "^6.22.0",
