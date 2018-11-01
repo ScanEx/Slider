@@ -466,13 +466,13 @@ function create_main_fragment(component, ctx) {
 			if (if_block1) if_block1.c();
 			text1 = createText("\r\n    ");
 			addListener(div0, "mousedown", mousedown_handler);
-			div0.className = "right svelte-fkriys";
+			div0.className = "right svelte-5lxzq8";
 			addLoc(div0, file, 11, 12, 471);
-			div1.className = "range svelte-fkriys";
+			div1.className = "range svelte-5lxzq8";
 			addLoc(div1, file, 3, 8, 137);
-			div2.className = "bar svelte-fkriys";
+			div2.className = "bar svelte-5lxzq8";
 			addLoc(div2, file, 2, 4, 102);
-			div3.className = "svelte-fkriys";
+			div3.className = "svelte-5lxzq8";
 			toggleClass(div3, "hslider", true);
 			addLoc(div3, file, 1, 0, 70);
 		},
@@ -572,7 +572,7 @@ function create_if_block_1(component, ctx) {
 			div = createElement("div");
 			if (if_block) if_block.c();
 			addListener(div, "mousedown", mousedown_handler);
-			div.className = "left svelte-fkriys";
+			div.className = "left svelte-5lxzq8";
 			addLoc(div, file, 5, 12, 207);
 		},
 
@@ -619,7 +619,7 @@ function create_if_block_2(component, ctx) {
 		c: function create() {
 			div = createElement("div");
 			text = createText(text_value);
-			div.className = "left-tick svelte-fkriys";
+			div.className = "left-tick svelte-5lxzq8";
 			addLoc(div, file, 7, 20, 326);
 		},
 
@@ -655,7 +655,7 @@ function create_if_block(component, ctx) {
 		c: function create() {
 			div = createElement("div");
 			text = createText(text_value);
-			div.className = "right-tick svelte-fkriys";
+			div.className = "right-tick svelte-5lxzq8";
 			addLoc(div, file, 13, 20, 593);
 		},
 
@@ -967,13 +967,13 @@ function create_main_fragment$1(component, ctx) {
 			if (if_block1) if_block1.c();
 			text1 = createText("\r\n    ");
 			addListener(div0, "mousedown", mousedown_handler);
-			div0.className = "right svelte-3l5wpe";
+			div0.className = "right svelte-1lc4qx0";
 			addLoc(div0, file$1, 11, 12, 471);
-			div1.className = "range svelte-3l5wpe";
+			div1.className = "range svelte-1lc4qx0";
 			addLoc(div1, file$1, 3, 8, 137);
-			div2.className = "bar svelte-3l5wpe";
+			div2.className = "bar svelte-1lc4qx0";
 			addLoc(div2, file$1, 2, 4, 102);
-			div3.className = "svelte-3l5wpe";
+			div3.className = "svelte-1lc4qx0";
 			toggleClass(div3, "vslider", true);
 			addLoc(div3, file$1, 1, 0, 70);
 		},
@@ -1073,7 +1073,7 @@ function create_if_block_1$1(component, ctx) {
 			div = createElement("div");
 			if (if_block) if_block.c();
 			addListener(div, "mousedown", mousedown_handler);
-			div.className = "left svelte-3l5wpe";
+			div.className = "left svelte-1lc4qx0";
 			addLoc(div, file$1, 5, 12, 207);
 		},
 
@@ -1120,7 +1120,7 @@ function create_if_block_2$1(component, ctx) {
 		c: function create() {
 			div = createElement("div");
 			text = createText(text_value);
-			div.className = "left-tick svelte-3l5wpe";
+			div.className = "left-tick svelte-1lc4qx0";
 			addLoc(div, file$1, 7, 20, 326);
 		},
 
@@ -1156,7 +1156,7 @@ function create_if_block$1(component, ctx) {
 		c: function create() {
 			div = createElement("div");
 			text = createText(text_value);
-			div.className = "right-tick svelte-3l5wpe";
+			div.className = "right-tick svelte-1lc4qx0";
 			addLoc(div, file$1, 13, 20, 593);
 		},
 
