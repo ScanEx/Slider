@@ -242,6 +242,19 @@ var Slider = (function () {
   	return !isNaN(parseFloat(low));
   }
 
+  function hasTooltip(_ref2) {
+  	var tooltip = _ref2.tooltip;
+
+  	switch (typeof tooltip === 'undefined' ? 'undefined' : _typeof(tooltip)) {
+  		case 'boolean':
+  			return tooltip;
+  		case 'string':
+  			return tooltip.toLowerCase() === 'true';
+  		default:
+  			return false;
+  	}
+  }
+
   function data() {
   	return {
   		min: 0,
@@ -260,20 +273,20 @@ var Slider = (function () {
   		var _get = this.get(),
   		    low = _get.low,
   		    high = _get.high,
-  		    tooltip = _get.tooltip;
+  		    hasTooltip = _get.hasTooltip;
 
   		this._startX = e.x;
   		this._target = target;
   		switch (target) {
   			case 'left':
   				this._start = parseFloat(low);
-  				if (this.hasTooltip(tooltip)) {
+  				if (hasTooltip) {
   					this.refs.leftTick.style.display = 'block';
   				}
   				break;
   			case 'right':
   				this._start = parseFloat(high);
-  				if (this.hasTooltip(tooltip)) {
+  				if (hasTooltip) {
   					this.refs.rightTick.style.display = 'block';
   				}
   				break;
@@ -328,9 +341,9 @@ var Slider = (function () {
 
   		var _get3 = this.get(),
   		    isRange = _get3.isRange,
-  		    tooltip = _get3.tooltip;
+  		    hasTooltip = _get3.hasTooltip;
 
-  		if (this.hasTooltip(tooltip)) {
+  		if (hasTooltip) {
   			if (isRange) {
   				this.refs.leftTick.style.display = 'none';
   			}
@@ -361,18 +374,6 @@ var Slider = (function () {
   			if (!isNaN(lo) && a <= lo && lo <= hi) {
   				this.refs.range.style.left = Math.round(lo / ratio) + 'px';
   			}
-  		}
-  	},
-  	hasTooltip: function hasTooltip(_ref2) {
-  		var tooltip = _ref2.tooltip;
-
-  		switch (typeof tooltip === 'undefined' ? 'undefined' : _typeof(tooltip)) {
-  			case 'boolean':
-  				return tooltip;
-  			case 'string':
-  				return tooltip.toLowerCase() === 'true';
-  			default:
-  				return false;
   		}
   	}
   };
@@ -445,7 +446,7 @@ var Slider = (function () {
 
   	var if_block0 = ctx.isRange && create_if_block_1(component, ctx);
 
-  	var if_block1 = ctx.hasTooltip(ctx.tooltip) && create_if_block(component, ctx);
+  	var if_block1 = ctx.hasTooltip && create_if_block(component, ctx);
 
   	function mousedown_handler(event) {
   		component.start(event, 'right');
@@ -463,7 +464,7 @@ var Slider = (function () {
   			text1 = createText("\r\n    ");
   			addListener(div0, "mousedown", mousedown_handler);
   			div0.className = "right svelte-1s8z56a";
-  			addLoc(div0, file, 11, 12, 474);
+  			addLoc(div0, file, 11, 12, 465);
   			div1.className = "range svelte-1s8z56a";
   			addLoc(div1, file, 3, 8, 131);
   			div2.className = "bar svelte-1s8z56a";
@@ -507,7 +508,7 @@ var Slider = (function () {
   				if_block0 = null;
   			}
 
-  			if (ctx.hasTooltip(ctx.tooltip)) {
+  			if (ctx.hasTooltip) {
   				if (if_block1) {
   					if_block1.p(changed, ctx);
   				} else {
@@ -556,7 +557,7 @@ var Slider = (function () {
   function create_if_block_1(component, ctx) {
   	var div;
 
-  	var if_block = ctx.hasTooltip(ctx.tooltip) && create_if_block_2(component, ctx);
+  	var if_block = ctx.hasTooltip && create_if_block_2(component, ctx);
 
   	function mousedown_handler(event) {
   		component.start(event, 'left');
@@ -578,7 +579,7 @@ var Slider = (function () {
   		},
 
   		p: function update(changed, ctx) {
-  			if (ctx.hasTooltip(ctx.tooltip)) {
+  			if (ctx.hasTooltip) {
   				if (if_block) {
   					if_block.p(changed, ctx);
   				} else {
@@ -604,7 +605,7 @@ var Slider = (function () {
   	};
   }
 
-  // (7:16) {#if hasTooltip(tooltip)}
+  // (7:16) {#if hasTooltip}
   function create_if_block_2(component, ctx) {
   	var div,
   	    text_value = ctx.parseFloat(ctx.low).toFixed(),
@@ -615,7 +616,7 @@ var Slider = (function () {
   			div = createElement("div");
   			text = createText(text_value);
   			div.className = "left-tick svelte-1s8z56a";
-  			addLoc(div, file, 7, 20, 329);
+  			addLoc(div, file, 7, 20, 320);
   		},
 
   		m: function mount(target, anchor) {
@@ -640,7 +641,7 @@ var Slider = (function () {
   	};
   }
 
-  // (13:16) {#if hasTooltip(tooltip)}
+  // (13:16) {#if hasTooltip}
   function create_if_block(component, ctx) {
   	var div,
   	    text_value = ctx.parseFloat(ctx.high).toFixed(),
@@ -651,7 +652,7 @@ var Slider = (function () {
   			div = createElement("div");
   			text = createText(text_value);
   			div.className = "right-tick svelte-1s8z56a";
-  			addLoc(div, file, 13, 20, 605);
+  			addLoc(div, file, 13, 20, 587);
   		},
 
   		m: function mount(target, anchor) {
@@ -688,10 +689,8 @@ var Slider = (function () {
   	this.refs = {};
   	this._state = assign(assign({ parseFloat: parseFloat }, data()), options.data);
 
-  	this._recompute({ low: 1 }, this._state);
+  	this._recompute({ low: 1, tooltip: 1 }, this._state);
   	if (!('low' in this._state)) console.warn("<HSlider> was created without expected data property 'low'");
-
-  	if (!('hasTooltip' in this._state)) console.warn("<HSlider> was created without expected data property 'hasTooltip'");
   	if (!('tooltip' in this._state)) console.warn("<HSlider> was created without expected data property 'tooltip'");
 
   	if (!('high' in this._state)) console.warn("<HSlider> was created without expected data property 'high'");
@@ -723,11 +722,16 @@ var Slider = (function () {
 
   HSlider.prototype._checkReadOnly = function _checkReadOnly(newState) {
   	if ('isRange' in newState && !this._updatingReadonlyProperty) throw new Error("<HSlider>: Cannot set read-only property 'isRange'");
+  	if ('hasTooltip' in newState && !this._updatingReadonlyProperty) throw new Error("<HSlider>: Cannot set read-only property 'hasTooltip'");
   };
 
   HSlider.prototype._recompute = function _recompute(changed, state) {
   	if (changed.low) {
   		if (this._differs(state.isRange, state.isRange = isRange(state))) changed.isRange = true;
+  	}
+
+  	if (changed.tooltip) {
+  		if (this._differs(state.hasTooltip, state.hasTooltip = hasTooltip(state))) changed.hasTooltip = true;
   	}
   };
 
@@ -738,6 +742,19 @@ var Slider = (function () {
   	var low = _ref.low;
 
   	return !isNaN(parseFloat(low));
+  }
+
+  function hasTooltip$1(_ref2) {
+  	var tooltip = _ref2.tooltip;
+
+  	switch (typeof tooltip === 'undefined' ? 'undefined' : _typeof(tooltip)) {
+  		case 'boolean':
+  			return tooltip;
+  		case 'string':
+  			return tooltip.toLowerCase() === 'true';
+  		default:
+  			return false;
+  	}
   }
 
   function data$1() {
@@ -758,20 +775,20 @@ var Slider = (function () {
   		var _get = this.get(),
   		    low = _get.low,
   		    high = _get.high,
-  		    tooltip = _get.tooltip;
+  		    hasTooltip = _get.hasTooltip;
 
   		this._startX = e.y;
   		this._target = target;
   		switch (target) {
   			case 'left':
   				this._start = parseFloat(low);
-  				if (this.hasTooltip(tooltip)) {
+  				if (hasTooltip) {
   					this.refs.leftTick.style.display = 'block';
   				}
   				break;
   			case 'right':
   				this._start = parseFloat(high);
-  				if (this.hasTooltip(tooltip)) {
+  				if (hasTooltip) {
   					this.refs.rightTick.style.display = 'block';
   				}
   				break;
@@ -825,9 +842,9 @@ var Slider = (function () {
 
   		var _get3 = this.get(),
   		    isRange = _get3.isRange,
-  		    tooltip = _get3.tooltip;
+  		    hasTooltip = _get3.hasTooltip;
 
-  		if (this.hasTooltip(tooltip)) {
+  		if (hasTooltip) {
   			if (isRange) {
   				this.refs.leftTick.style.display = 'none';
   			}
@@ -860,18 +877,6 @@ var Slider = (function () {
   			if (!isNaN(lo) && a <= lo && lo <= hi) {
   				this.refs.range.style.top = Math.round(lo / ratio) + 'px';
   			}
-  		}
-  	},
-  	hasTooltip: function hasTooltip(_ref2) {
-  		var tooltip = _ref2.tooltip;
-
-  		switch (typeof tooltip === 'undefined' ? 'undefined' : _typeof(tooltip)) {
-  			case 'boolean':
-  				return tooltip;
-  			case 'string':
-  				return tooltip.toLowerCase() === 'true';
-  			default:
-  				return false;
   		}
   	}
   };
@@ -944,7 +949,7 @@ var Slider = (function () {
 
   	var if_block0 = ctx.isRange && create_if_block_1$1(component, ctx);
 
-  	var if_block1 = ctx.hasTooltip(ctx.tooltip) && create_if_block$1(component, ctx);
+  	var if_block1 = ctx.hasTooltip && create_if_block$1(component, ctx);
 
   	function mousedown_handler(event) {
   		component.start(event, 'right');
@@ -962,7 +967,7 @@ var Slider = (function () {
   			text1 = createText("\r\n    ");
   			addListener(div0, "mousedown", mousedown_handler);
   			div0.className = "right svelte-cczca1";
-  			addLoc(div0, file$1, 11, 12, 474);
+  			addLoc(div0, file$1, 11, 12, 465);
   			div1.className = "range svelte-cczca1";
   			addLoc(div1, file$1, 3, 8, 131);
   			div2.className = "bar svelte-cczca1";
@@ -1006,7 +1011,7 @@ var Slider = (function () {
   				if_block0 = null;
   			}
 
-  			if (ctx.hasTooltip(ctx.tooltip)) {
+  			if (ctx.hasTooltip) {
   				if (if_block1) {
   					if_block1.p(changed, ctx);
   				} else {
@@ -1055,7 +1060,7 @@ var Slider = (function () {
   function create_if_block_1$1(component, ctx) {
   	var div;
 
-  	var if_block = ctx.hasTooltip(ctx.tooltip) && create_if_block_2$1(component, ctx);
+  	var if_block = ctx.hasTooltip && create_if_block_2$1(component, ctx);
 
   	function mousedown_handler(event) {
   		component.start(event, 'left');
@@ -1077,7 +1082,7 @@ var Slider = (function () {
   		},
 
   		p: function update(changed, ctx) {
-  			if (ctx.hasTooltip(ctx.tooltip)) {
+  			if (ctx.hasTooltip) {
   				if (if_block) {
   					if_block.p(changed, ctx);
   				} else {
@@ -1103,7 +1108,7 @@ var Slider = (function () {
   	};
   }
 
-  // (7:16) {#if hasTooltip(tooltip)}
+  // (7:16) {#if hasTooltip}
   function create_if_block_2$1(component, ctx) {
   	var div,
   	    text_value = ctx.parseFloat(ctx.low).toFixed(),
@@ -1114,7 +1119,7 @@ var Slider = (function () {
   			div = createElement("div");
   			text = createText(text_value);
   			div.className = "left-tick svelte-cczca1";
-  			addLoc(div, file$1, 7, 20, 329);
+  			addLoc(div, file$1, 7, 20, 320);
   		},
 
   		m: function mount(target, anchor) {
@@ -1139,7 +1144,7 @@ var Slider = (function () {
   	};
   }
 
-  // (13:16) {#if hasTooltip(tooltip)}
+  // (13:16) {#if hasTooltip}
   function create_if_block$1(component, ctx) {
   	var div,
   	    text_value = ctx.parseFloat(ctx.high).toFixed(),
@@ -1150,7 +1155,7 @@ var Slider = (function () {
   			div = createElement("div");
   			text = createText(text_value);
   			div.className = "right-tick svelte-cczca1";
-  			addLoc(div, file$1, 13, 20, 605);
+  			addLoc(div, file$1, 13, 20, 587);
   		},
 
   		m: function mount(target, anchor) {
@@ -1187,10 +1192,8 @@ var Slider = (function () {
   	this.refs = {};
   	this._state = assign(assign({ parseFloat: parseFloat }, data$1()), options.data);
 
-  	this._recompute({ low: 1 }, this._state);
+  	this._recompute({ low: 1, tooltip: 1 }, this._state);
   	if (!('low' in this._state)) console.warn("<VSlider> was created without expected data property 'low'");
-
-  	if (!('hasTooltip' in this._state)) console.warn("<VSlider> was created without expected data property 'hasTooltip'");
   	if (!('tooltip' in this._state)) console.warn("<VSlider> was created without expected data property 'tooltip'");
 
   	if (!('high' in this._state)) console.warn("<VSlider> was created without expected data property 'high'");
@@ -1222,11 +1225,16 @@ var Slider = (function () {
 
   VSlider.prototype._checkReadOnly = function _checkReadOnly(newState) {
   	if ('isRange' in newState && !this._updatingReadonlyProperty) throw new Error("<VSlider>: Cannot set read-only property 'isRange'");
+  	if ('hasTooltip' in newState && !this._updatingReadonlyProperty) throw new Error("<VSlider>: Cannot set read-only property 'hasTooltip'");
   };
 
   VSlider.prototype._recompute = function _recompute(changed, state) {
   	if (changed.low) {
   		if (this._differs(state.isRange, state.isRange = isRange$1(state))) changed.isRange = true;
+  	}
+
+  	if (changed.tooltip) {
+  		if (this._differs(state.hasTooltip, state.hasTooltip = hasTooltip$1(state))) changed.hasTooltip = true;
   	}
   };
 
