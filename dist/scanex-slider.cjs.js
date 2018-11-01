@@ -264,11 +264,11 @@ var methods = {
 		this._target = target;
 		switch (target) {
 			case 'left':
-				this._start = low;
+				this._start = parseFloat(low);
 				this.refs.leftTick.style.display = 'block';
 				break;
 			case 'right':
-				this._start = high;
+				this._start = parseFloat(high);
 				this.refs.rightTick.style.display = 'block';
 				break;
 			default:
@@ -742,11 +742,11 @@ var methods$1 = {
 		this._target = target;
 		switch (target) {
 			case 'left':
-				this._start = low;
+				this._start = parseFloat(low);
 				this.refs.leftTick.style.display = 'block';
 				break;
 			case 'right':
-				this._start = high;
+				this._start = parseFloat(high);
 				this.refs.rightTick.style.display = 'block';
 				break;
 			default:
