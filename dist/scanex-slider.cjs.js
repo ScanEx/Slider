@@ -439,7 +439,7 @@ function create_main_fragment(component, ctx) {
 			text0 = createText("\r\n            ");
 			div0 = createElement("div");
 			if (if_block1) if_block1.c();
-			text1 = createText("\r\n        ");
+			text1 = createText("\r\n    ");
 			addListener(div0, "mousedown", mousedown_handler);
 			div0.className = "right svelte-1s8z56a";
 			addLoc(div0, file, 11, 12, 462);
@@ -461,14 +461,14 @@ function create_main_fragment(component, ctx) {
 			if (if_block1) if_block1.m(div0, null);
 			component.refs.right = div0;
 			component.refs.range = div1;
-			append(div2, text1);
+			component.refs.bar = div2;
+			append(div3, text1);
 
 			if (slot_content_default) {
-				append(div2, slot_content_default_before || (slot_content_default_before = createComment()));
-				append(div2, slot_content_default);
+				append(div3, slot_content_default_before || (slot_content_default_before = createComment()));
+				append(div3, slot_content_default);
 			}
 
-			component.refs.bar = div2;
 			current = true;
 		},
 
@@ -522,12 +522,11 @@ function create_main_fragment(component, ctx) {
 			removeListener(div0, "mousedown", mousedown_handler);
 			if (component.refs.right === div0) component.refs.right = null;
 			if (component.refs.range === div1) component.refs.range = null;
+			if (component.refs.bar === div2) component.refs.bar = null;
 
 			if (slot_content_default) {
 				reinsertAfter(slot_content_default_before, slot_content_default);
 			}
-
-			if (component.refs.bar === div2) component.refs.bar = null;
 		}
 	};
 }
@@ -918,7 +917,7 @@ function create_main_fragment$1(component, ctx) {
 			text0 = createText("\r\n            ");
 			div0 = createElement("div");
 			if (if_block1) if_block1.c();
-			text1 = createText("\r\n        ");
+			text1 = createText("\r\n    ");
 			addListener(div0, "mousedown", mousedown_handler);
 			div0.className = "right svelte-cczca1";
 			addLoc(div0, file$1, 11, 12, 462);
@@ -940,14 +939,14 @@ function create_main_fragment$1(component, ctx) {
 			if (if_block1) if_block1.m(div0, null);
 			component.refs.right = div0;
 			component.refs.range = div1;
-			append(div2, text1);
+			component.refs.bar = div2;
+			append(div3, text1);
 
 			if (slot_content_default) {
-				append(div2, slot_content_default_before || (slot_content_default_before = createComment()));
-				append(div2, slot_content_default);
+				append(div3, slot_content_default_before || (slot_content_default_before = createComment()));
+				append(div3, slot_content_default);
 			}
 
-			component.refs.bar = div2;
 			current = true;
 		},
 
@@ -1001,12 +1000,11 @@ function create_main_fragment$1(component, ctx) {
 			removeListener(div0, "mousedown", mousedown_handler);
 			if (component.refs.right === div0) component.refs.right = null;
 			if (component.refs.range === div1) component.refs.range = null;
+			if (component.refs.bar === div2) component.refs.bar = null;
 
 			if (slot_content_default) {
 				reinsertAfter(slot_content_default_before, slot_content_default);
 			}
-
-			if (component.refs.bar === div2) component.refs.bar = null;
 		}
 	};
 }
