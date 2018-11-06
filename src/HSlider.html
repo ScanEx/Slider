@@ -1,5 +1,6 @@
 <svelte:window on:mouseup="stop(event)" on:mousemove="move(event)"/>
 <div class:hslider="true">
+    <slot></slot>
     <div class="bar" ref:bar>
         <div class="range" ref:range>
             {#if isRange}
@@ -15,8 +16,7 @@
                 {/if}
             </div>
         </div>
-    </div>
-    <slot></slot>
+    </div>    
 </div>
 
 <style>    
