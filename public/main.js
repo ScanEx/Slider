@@ -49,9 +49,10 @@ var Slider = (function () {
   	}
   }
 
-  function reinsertAfter(before, target) {
-  	while (before.nextSibling) {
-  		target.appendChild(before.nextSibling);
+  function reinsertBefore(after, target) {
+  	var parent = after.parentNode;
+  	while (parent.firstChild !== after) {
+  		target.appendChild(parent.firstChild);
   	}
   }
 
@@ -431,13 +432,13 @@ var Slider = (function () {
 
   function create_main_fragment(component, ctx) {
   	var div3,
+  	    slot_content_default = component._slotted.default,
+  	    slot_content_default_after,
+  	    text0,
   	    div2,
   	    div1,
-  	    text0,
-  	    div0,
   	    text1,
-  	    slot_content_default = component._slotted.default,
-  	    slot_content_default_before,
+  	    div0,
   	    current;
 
   	function onwindowmouseup(event) {
@@ -459,20 +460,20 @@ var Slider = (function () {
   	return {
   		c: function create() {
   			div3 = createElement("div");
+  			text0 = createText("\r\n    ");
   			div2 = createElement("div");
   			div1 = createElement("div");
   			if (if_block0) if_block0.c();
-  			text0 = createText("\r\n            ");
+  			text1 = createText("\r\n            ");
   			div0 = createElement("div");
   			if (if_block1) if_block1.c();
-  			text1 = createText("\r\n    ");
   			addListener(div0, "mousedown", mousedown_handler);
   			div0.className = "right svelte-5lxzq8";
-  			addLoc(div0, file, 11, 12, 471);
+  			addLoc(div0, file, 12, 12, 490);
   			div1.className = "range svelte-5lxzq8";
-  			addLoc(div1, file, 3, 8, 137);
+  			addLoc(div1, file, 4, 8, 156);
   			div2.className = "bar svelte-5lxzq8";
-  			addLoc(div2, file, 2, 4, 102);
+  			addLoc(div2, file, 3, 4, 121);
   			div3.className = "svelte-5lxzq8";
   			toggleClass(div3, "hslider", true);
   			addLoc(div3, file, 1, 0, 70);
@@ -480,22 +481,22 @@ var Slider = (function () {
 
   		m: function mount(target, anchor) {
   			insert(target, div3, anchor);
+
+  			if (slot_content_default) {
+  				append(div3, slot_content_default);
+  				append(div3, slot_content_default_after || (slot_content_default_after = createComment()));
+  			}
+
+  			append(div3, text0);
   			append(div3, div2);
   			append(div2, div1);
   			if (if_block0) if_block0.m(div1, null);
-  			append(div1, text0);
+  			append(div1, text1);
   			append(div1, div0);
   			if (if_block1) if_block1.m(div0, null);
   			component.refs.right = div0;
   			component.refs.range = div1;
   			component.refs.bar = div2;
-  			append(div3, text1);
-
-  			if (slot_content_default) {
-  				append(div3, slot_content_default_before || (slot_content_default_before = createComment()));
-  				append(div3, slot_content_default);
-  			}
-
   			current = true;
   		},
 
@@ -506,7 +507,7 @@ var Slider = (function () {
   				} else {
   					if_block0 = create_if_block_1(component, ctx);
   					if_block0.c();
-  					if_block0.m(div1, text0);
+  					if_block0.m(div1, text1);
   				}
   			} else if (if_block0) {
   				if_block0.d(1);
@@ -544,21 +545,21 @@ var Slider = (function () {
   				detachNode(div3);
   			}
 
+  			if (slot_content_default) {
+  				reinsertBefore(slot_content_default_after, slot_content_default);
+  			}
+
   			if (if_block0) if_block0.d();
   			if (if_block1) if_block1.d();
   			removeListener(div0, "mousedown", mousedown_handler);
   			if (component.refs.right === div0) component.refs.right = null;
   			if (component.refs.range === div1) component.refs.range = null;
   			if (component.refs.bar === div2) component.refs.bar = null;
-
-  			if (slot_content_default) {
-  				reinsertAfter(slot_content_default_before, slot_content_default);
-  			}
   		}
   	};
   }
 
-  // (5:12) {#if isRange}
+  // (6:12) {#if isRange}
   function create_if_block_1(component, ctx) {
   	var div;
 
@@ -574,7 +575,7 @@ var Slider = (function () {
   			if (if_block) if_block.c();
   			addListener(div, "mousedown", mousedown_handler);
   			div.className = "left svelte-5lxzq8";
-  			addLoc(div, file, 5, 12, 207);
+  			addLoc(div, file, 6, 12, 226);
   		},
 
   		m: function mount(target, anchor) {
@@ -610,7 +611,7 @@ var Slider = (function () {
   	};
   }
 
-  // (7:16) {#if hasTooltip}
+  // (8:16) {#if hasTooltip}
   function create_if_block_2(component, ctx) {
   	var div,
   	    text_value = ctx.parseFloat(ctx.low).toFixed(),
@@ -621,7 +622,7 @@ var Slider = (function () {
   			div = createElement("div");
   			text = createText(text_value);
   			div.className = "left-tick svelte-5lxzq8";
-  			addLoc(div, file, 7, 20, 326);
+  			addLoc(div, file, 8, 20, 345);
   		},
 
   		m: function mount(target, anchor) {
@@ -646,7 +647,7 @@ var Slider = (function () {
   	};
   }
 
-  // (13:16) {#if hasTooltip}
+  // (14:16) {#if hasTooltip}
   function create_if_block(component, ctx) {
   	var div,
   	    text_value = ctx.parseFloat(ctx.high).toFixed(),
@@ -657,7 +658,7 @@ var Slider = (function () {
   			div = createElement("div");
   			text = createText(text_value);
   			div.className = "right-tick svelte-5lxzq8";
-  			addLoc(div, file, 13, 20, 593);
+  			addLoc(div, file, 14, 20, 612);
   		},
 
   		m: function mount(target, anchor) {
@@ -932,13 +933,13 @@ var Slider = (function () {
 
   function create_main_fragment$1(component, ctx) {
   	var div3,
+  	    slot_content_default = component._slotted.default,
+  	    slot_content_default_after,
+  	    text0,
   	    div2,
   	    div1,
-  	    text0,
-  	    div0,
   	    text1,
-  	    slot_content_default = component._slotted.default,
-  	    slot_content_default_before,
+  	    div0,
   	    current;
 
   	function onwindowmouseup(event) {
@@ -960,20 +961,20 @@ var Slider = (function () {
   	return {
   		c: function create() {
   			div3 = createElement("div");
+  			text0 = createText("\r\n    ");
   			div2 = createElement("div");
   			div1 = createElement("div");
   			if (if_block0) if_block0.c();
-  			text0 = createText("\r\n            ");
+  			text1 = createText("\r\n            ");
   			div0 = createElement("div");
   			if (if_block1) if_block1.c();
-  			text1 = createText("\r\n    ");
   			addListener(div0, "mousedown", mousedown_handler);
   			div0.className = "right svelte-1lc4qx0";
-  			addLoc(div0, file$1, 11, 12, 471);
+  			addLoc(div0, file$1, 12, 12, 490);
   			div1.className = "range svelte-1lc4qx0";
-  			addLoc(div1, file$1, 3, 8, 137);
+  			addLoc(div1, file$1, 4, 8, 156);
   			div2.className = "bar svelte-1lc4qx0";
-  			addLoc(div2, file$1, 2, 4, 102);
+  			addLoc(div2, file$1, 3, 4, 121);
   			div3.className = "svelte-1lc4qx0";
   			toggleClass(div3, "vslider", true);
   			addLoc(div3, file$1, 1, 0, 70);
@@ -981,22 +982,22 @@ var Slider = (function () {
 
   		m: function mount(target, anchor) {
   			insert(target, div3, anchor);
+
+  			if (slot_content_default) {
+  				append(div3, slot_content_default);
+  				append(div3, slot_content_default_after || (slot_content_default_after = createComment()));
+  			}
+
+  			append(div3, text0);
   			append(div3, div2);
   			append(div2, div1);
   			if (if_block0) if_block0.m(div1, null);
-  			append(div1, text0);
+  			append(div1, text1);
   			append(div1, div0);
   			if (if_block1) if_block1.m(div0, null);
   			component.refs.right = div0;
   			component.refs.range = div1;
   			component.refs.bar = div2;
-  			append(div3, text1);
-
-  			if (slot_content_default) {
-  				append(div3, slot_content_default_before || (slot_content_default_before = createComment()));
-  				append(div3, slot_content_default);
-  			}
-
   			current = true;
   		},
 
@@ -1007,7 +1008,7 @@ var Slider = (function () {
   				} else {
   					if_block0 = create_if_block_1$1(component, ctx);
   					if_block0.c();
-  					if_block0.m(div1, text0);
+  					if_block0.m(div1, text1);
   				}
   			} else if (if_block0) {
   				if_block0.d(1);
@@ -1045,21 +1046,21 @@ var Slider = (function () {
   				detachNode(div3);
   			}
 
+  			if (slot_content_default) {
+  				reinsertBefore(slot_content_default_after, slot_content_default);
+  			}
+
   			if (if_block0) if_block0.d();
   			if (if_block1) if_block1.d();
   			removeListener(div0, "mousedown", mousedown_handler);
   			if (component.refs.right === div0) component.refs.right = null;
   			if (component.refs.range === div1) component.refs.range = null;
   			if (component.refs.bar === div2) component.refs.bar = null;
-
-  			if (slot_content_default) {
-  				reinsertAfter(slot_content_default_before, slot_content_default);
-  			}
   		}
   	};
   }
 
-  // (5:12) {#if isRange}
+  // (6:12) {#if isRange}
   function create_if_block_1$1(component, ctx) {
   	var div;
 
@@ -1075,7 +1076,7 @@ var Slider = (function () {
   			if (if_block) if_block.c();
   			addListener(div, "mousedown", mousedown_handler);
   			div.className = "left svelte-1lc4qx0";
-  			addLoc(div, file$1, 5, 12, 207);
+  			addLoc(div, file$1, 6, 12, 226);
   		},
 
   		m: function mount(target, anchor) {
@@ -1111,7 +1112,7 @@ var Slider = (function () {
   	};
   }
 
-  // (7:16) {#if hasTooltip}
+  // (8:16) {#if hasTooltip}
   function create_if_block_2$1(component, ctx) {
   	var div,
   	    text_value = ctx.parseFloat(ctx.low).toFixed(),
@@ -1122,7 +1123,7 @@ var Slider = (function () {
   			div = createElement("div");
   			text = createText(text_value);
   			div.className = "left-tick svelte-1lc4qx0";
-  			addLoc(div, file$1, 7, 20, 326);
+  			addLoc(div, file$1, 8, 20, 345);
   		},
 
   		m: function mount(target, anchor) {
@@ -1147,7 +1148,7 @@ var Slider = (function () {
   	};
   }
 
-  // (13:16) {#if hasTooltip}
+  // (14:16) {#if hasTooltip}
   function create_if_block$1(component, ctx) {
   	var div,
   	    text_value = ctx.parseFloat(ctx.high).toFixed(),
@@ -1158,7 +1159,7 @@ var Slider = (function () {
   			div = createElement("div");
   			text = createText(text_value);
   			div.className = "right-tick svelte-1lc4qx0";
-  			addLoc(div, file$1, 13, 20, 593);
+  			addLoc(div, file$1, 14, 20, 612);
   		},
 
   		m: function mount(target, anchor) {
